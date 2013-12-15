@@ -9,4 +9,5 @@ public interface IPlayers {
 	public static final String IS_NOMINANT = "";
 	public static final String ACCUSE = "";
 	public static final String REBUKE = "";
+	public static final String IMAGE = "";
 }

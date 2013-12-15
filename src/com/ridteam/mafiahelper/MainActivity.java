@@ -1,16 +1,32 @@
 package com.ridteam.mafiahelper;
 
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 
-public class MainActivity extends Activity {
+import com.ridteam.mafiahelper.database.IDataBase;
+import com.ridteam.mafiahelper.fragments.AddPlayersFragment;
+
+public class MainActivity extends FragmentActivity {//ActionBarActivity {
+	private IDataBase mDataBase;
+	private AddPlayersFragment mAddPlayersFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		mDataBase = MafiaHelperApplication.getDataBase();
+		mAddPlayersFragment = new AddPlayersFragment();
+		mAddPlayersFragment.setModel(mDataBase);
+		
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.add(R.id.fragment, mAddPlayersFragment);
+		transaction.commit();
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
