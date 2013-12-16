@@ -23,7 +23,7 @@ public class AddPlayersFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Cursor cursor = mDataBase.getPlayers();
+		Cursor cursor = mDataBase.getPlayers(getActivity().getBaseContext());
 		mAdapter = new AddPlayersAdapter(getActivity(), cursor, 0);
 		setListAdapter(mAdapter);
 		getListView().setOnItemClickListener(mController);

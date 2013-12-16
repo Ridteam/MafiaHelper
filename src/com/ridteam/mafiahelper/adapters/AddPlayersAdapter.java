@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ridteam.mafiahelper.R;
-import com.ridteam.mafiahelper.database.IPlayers;
+import com.ridteam.mafiahelper.database.MafiaHelperTables.PlayersTable;
 
 public class AddPlayersAdapter extends CursorAdapter {
 	private LayoutInflater mInflater;
@@ -20,8 +20,8 @@ public class AddPlayersAdapter extends CursorAdapter {
 	public AddPlayersAdapter(Context context, Cursor cursor, int flags) {
 		super(context, cursor, flags);
 		mInflater = LayoutInflater.from(context);
-		mNameFieldIndex = cursor.getColumnIndex(IPlayers.NAME);
-		mImageFieldIndex = cursor.getColumnIndex(IPlayers.IMAGE);
+		mNameFieldIndex = cursor.getColumnIndex(PlayersTable.NAME);
+		mImageFieldIndex = cursor.getColumnIndex(PlayersTable.PICTURE);
 	}
 
 	@Override
