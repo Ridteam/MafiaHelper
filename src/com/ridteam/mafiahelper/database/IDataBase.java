@@ -20,7 +20,7 @@ public interface IDataBase {
 	/**
 	 * Add player to the database.
 	 * 
-	 * @param name Name of added player.
+	 * @param userName Name of added player.
 	 */
 	public void addPlayer(String name);
 	
