@@ -1,6 +1,6 @@
 package com.ridteam.mafiahelper.controller;
 
-import com.ridteam.mafiahelper.database.IDataBase;
+import com.ridteam.mafiahelper.model.IModel;
 
 /** 
  * Controller interface for view.
@@ -11,7 +11,7 @@ import com.ridteam.mafiahelper.database.IDataBase;
 public interface IController {
 	public static final int MESSAGE_MENU_CLICK = 101;
 	
-	public IDataBase getDataBase();
+	public IModel getModel();
 	public boolean sendMessage(int message);
 	public boolean sendMessage(int message, Object data);
 }

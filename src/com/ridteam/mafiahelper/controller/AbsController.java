@@ -1,6 +1,6 @@
 package com.ridteam.mafiahelper.controller;
 
-import com.ridteam.mafiahelper.database.IDataBase;
+import com.ridteam.mafiahelper.model.IModel;
 
 /**
  * Abstract controller of IController interface that implement getDataBase method.
@@ -9,14 +9,14 @@ import com.ridteam.mafiahelper.database.IDataBase;
  *
  */
 public abstract class AbsController implements IController{
-	private IDataBase mDataBase;
+	private IModel mDataBase;
 	
-	public AbsController(IDataBase dataBase) {
+	public AbsController(IModel dataBase) {
 		mDataBase = dataBase;
 	}
 	
 	@Override
-	public IDataBase getDataBase() {
+	public IModel getModel() {
 		return mDataBase;
 	}
 	

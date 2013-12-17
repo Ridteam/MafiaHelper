@@ -1,6 +1,6 @@
 package com.ridteam.mafiahelper.controller;
 
-import com.ridteam.mafiahelper.database.IDataBase;
+import com.ridteam.mafiahelper.model.IModel;
 import com.ridteam.mafiahelper.views.IListView;
 
 /**
@@ -10,16 +10,16 @@ import com.ridteam.mafiahelper.views.IListView;
  *
  */
 public abstract class AbsListController implements IListController {
-	private IDataBase mDataBase;
+	private IModel mModel;
 	private IListView mView;
 	
-	public AbsListController(IDataBase dataBase) {
-		mDataBase = dataBase;
+	public AbsListController(IModel model) {
+		mModel = model;
 	}
 	
 	@Override
-	public IDataBase getDataBase() {
-		return mDataBase;
+	public IModel getModel() {
+		return mModel;
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public class MafiaHelperTables {
 	 * @author Foenix
 	 *
 	 */
-	interface PlayersColumns {  
+	public interface PlayersColumns {  
 		String NAME = "name";
 		String ROLE_ID = "role_id";
 		String IS_ALIVE = "is_alive";
@@ -21,9 +21,11 @@ public class MafiaHelperTables {
 		String ACCUSE = "accuse";
 		String REBUKE = "rebuke";
 		String PICTURE = "picture";
+		String ROLE_NAME = "role_name";
+		String ROLE_PICTURE = "role_picture";
 	}
 	
-	interface PlayerEffectsColumns {
+	public interface PlayerEffectsColumns {
 		String PLAYER_ID = "player_id";
 		String TYPE = "type";
 		String TIME = "time";
@@ -38,7 +40,7 @@ public class MafiaHelperTables {
 		String PICTURE = "picture";
 	}
 	
-	interface RolesColumns {
+	public interface RolesColumns {
 		String NAME = "name";
 		String DESC = "desc";
 		String SIDE = "side";
@@ -47,7 +49,7 @@ public class MafiaHelperTables {
 		String PICTURE = "picture";
 	}
 	
-	interface RolePropertiesColumns {
+	public interface RolePropertiesColumns {
 		String ROLE_ID = "role_id";
 		String TYPE = "type";
 		String VALUE = "value";

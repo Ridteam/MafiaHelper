@@ -12,16 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ridteam.mafiahelper.R;
-import com.ridteam.mafiahelper.database.IPlayers;
+import com.ridteam.mafiahelper.database.MafiaHelperTables;
 import com.ridteam.mafiahelper.utils.ImageUtils;
 
 public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 	private LayoutInflater mInflater;
 	private int mIdIndex;
 	private int mUserNameIndex;
-	private int mUserImageIndex;
+	private int mUserPictureIndex;
 	private int mRoleNameIndex;
-	private int mRoleImageIndex;
+	private int mRolePictureIndex;
 	
 	private OnContextMenuButtonClickListener mOnContextMenuButtonClickListener;
 
@@ -29,10 +29,10 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 		super(context, cursor, 0);
 		mInflater = LayoutInflater.from(context);
 		mIdIndex = cursor.getColumnIndex("_id");
-		mUserNameIndex = cursor.getColumnIndex(IPlayers.NAME);
-		mUserImageIndex = cursor.getColumnIndex(IPlayers.IMAGE);
-		mRoleNameIndex = cursor.getColumnIndex(IPlayers.ROLE_NAME);
-		mRoleImageIndex = cursor.getColumnIndex(IPlayers.ROLE_IMAGE);
+		mUserNameIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.NAME);
+		mUserPictureIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.PICTURE);
+		mRoleNameIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.ROLE_NAME);
+		mRolePictureIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.ROLE_PICTURE);
 	}
 
 	@Override
@@ -51,13 +51,13 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 		
 		String userName = cursor.getString(mUserNameIndex);
 		String roleName = cursor.getString(mRoleNameIndex);
-		String userImage = cursor.getString(mUserImageIndex);
-		String roleImage = cursor.getString(mRoleImageIndex);
+		String userPicture = cursor.getString(mUserPictureIndex);
+		String rolePicture = cursor.getString(mRolePictureIndex);
 		
 		holder.userName.setText(userName);
 		holder.roleName.setText(roleName);
-		ImageUtils.setImage(holder.userImage, ImageUtils.USERS_FOLDER, userImage, context);
-		ImageUtils.setImage(holder.roleImage, ImageUtils.ROLES_FOLDER, roleImage, context);
+		ImageUtils.setImage(holder.userPicture, ImageUtils.USERS_FOLDER, userPicture, context);
+		ImageUtils.setImage(holder.rolePicture, ImageUtils.ROLES_FOLDER, rolePicture, context);
 		
 		MenuButtonHolder menuHolder = (MenuButtonHolder) holder.menuButton.getTag();
 		menuHolder.position = cursor.getPosition();
@@ -78,15 +78,15 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 	private class ViewHolder {
 		public final TextView userName;
 		public final TextView roleName;
-		public final ImageView userImage;
-		public final ImageView roleImage;
+		public final ImageView userPicture;
+		public final ImageView rolePicture;
 		public final View menuButton;
 		
 		public ViewHolder(View view) {
 			userName = (TextView) view.findViewById(R.id.txtUserName);
 			roleName = (TextView) view.findViewById(R.id.txtRoleName);
-			userImage = (ImageView) view.findViewById(R.id.imgUserImage);
-			roleImage = (ImageView) view.findViewById(R.id.imgRoleImage);
+			userPicture = (ImageView) view.findViewById(R.id.imgUserPicture);
+			rolePicture = (ImageView) view.findViewById(R.id.imgRolePicture);
 			menuButton = (TextView) view.findViewById(R.id.btnMenu);
 			menuButton.setTag(new MenuButtonHolder());
 		}

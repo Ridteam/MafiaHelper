@@ -13,11 +13,11 @@ import android.widget.ListAdapter;
 import com.ridteam.mafiahelper.adapters.PlayersListAdapter;
 import com.ridteam.mafiahelper.controller.AddPlayersController;
 import com.ridteam.mafiahelper.controller.IListController;
-import com.ridteam.mafiahelper.database.IDataBase;
 import com.ridteam.mafiahelper.fragments.ListViewFragment;
+import com.ridteam.mafiahelper.model.IModel;
 
 public class MainActivity extends ActionBarActivity {
-	private IDataBase mDataBase;
+	private IModel mModel;
 	private IListController mPlayersListController;
 	private ListViewFragment mAddPlayersFragment;
 
@@ -26,9 +26,9 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		mDataBase = MafiaHelperApplication.getDataBase();
-		ListAdapter adapter = new PlayersListAdapter(this, mDataBase.getPlayers());
-		mPlayersListController = new AddPlayersController(mDataBase);
+		mModel = MafiaHelperApplication.getDataBase(this);
+		ListAdapter adapter = new PlayersListAdapter(this, mModel.getPlayers());
+		mPlayersListController = new AddPlayersController(mModel);
 		mAddPlayersFragment = new ListViewFragment();
 		mAddPlayersFragment.setController(mPlayersListController);
 		mAddPlayersFragment.setListAdapter(adapter);
@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
-				mDataBase.addPlayer(editAdd.getText().toString());
+				mModel.addPlayer(editAdd.getText().toString());
 			}
 		});
 	}

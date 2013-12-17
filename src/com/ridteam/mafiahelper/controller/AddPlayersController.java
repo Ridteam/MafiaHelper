@@ -4,13 +4,13 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.ridteam.mafiahelper.database.IDataBase;
+import com.ridteam.mafiahelper.model.IModel;
 
 
 public class AddPlayersController extends AbsListController {
 	
-	public AddPlayersController(IDataBase dataBase) {
-		super(dataBase);
+	public AddPlayersController(IModel model) {
+		super(model);
 	}
 
 	@Override

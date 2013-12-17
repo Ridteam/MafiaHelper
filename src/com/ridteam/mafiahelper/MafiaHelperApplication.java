@@ -1,12 +1,13 @@
 package com.ridteam.mafiahelper;
 
 import android.app.Application;
+import android.content.Context;
 
-import com.ridteam.mafiahelper.database.IDataBase;
+import com.ridteam.mafiahelper.model.IModel;
 
 public class MafiaHelperApplication extends Application {
 
-	public static IDataBase getDataBase() {
+	public static IModel getDataBase(Context context) {
 		return null;
 	}
 }
