@@ -28,12 +28,15 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 	public PlayersListAdapter(Context context, Cursor cursor) {
 		super(context, cursor, 0);
 		mInflater = LayoutInflater.from(context);
-		mIdIndex = cursor.getColumnIndex("_id");
-		mUserNameIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.NAME);
-		mUserPictureIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.PICTURE);
-		mRoleNameIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.ROLE_NAME);
-		mRolePictureIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.ROLE_PICTURE);
+		findColumns();
 	}
+	
+    @Override
+    public Cursor swapCursor(Cursor cursor) {
+        Cursor res = super.swapCursor(cursor);
+        findColumns();
+        return res;
+    }
 
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -49,6 +52,16 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 			view.setTag(holder);
 		}
 		
+		bindHolder(holder, context, cursor);
+	}
+
+	@Override
+	public void setOnContextMenuButtonClickListener(
+			OnContextMenuButtonClickListener onContextMenuButtonClickListener) {
+		mOnContextMenuButtonClickListener = onContextMenuButtonClickListener;
+	}
+	
+	void bindHolder(ViewHolder holder, Context context, Cursor cursor) {
 		String userName = cursor.getString(mUserNameIndex);
 		String roleName = cursor.getString(mRoleNameIndex);
 		String userPicture = cursor.getString(mUserPictureIndex);
@@ -62,6 +75,17 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 		MenuButtonHolder menuHolder = (MenuButtonHolder) holder.menuButton.getTag();
 		menuHolder.position = cursor.getPosition();
 		menuHolder.id = cursor.getLong(mIdIndex);
+	}
+	
+	void findColumns() {
+		Cursor cursor = getCursor();
+		if(cursor != null) {
+			mIdIndex = cursor.getColumnIndex("_id");
+			mUserNameIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.NAME);
+			mUserPictureIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.PICTURE);
+			mRoleNameIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.ROLE_NAME);
+			mRolePictureIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.ROLE_PICTURE);
+		}
 	}
 	
 	private OnClickListener mMenuClickListener = new OnClickListener() {
@@ -95,12 +119,5 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 	private class MenuButtonHolder {
 		public int position;
 		public long id;
-	}
-
-	@Override
-	public void setOnContextMenuButtonClickListener(
-			OnContextMenuButtonClickListener onContextMenuButtonClickListener) {
-		// TODO Auto-generated method stub
-		
 	}
 }
