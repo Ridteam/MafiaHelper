@@ -21,6 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+			android:name = "com.ridteam.mafiahelper.database.MafiaHelperProvider"
+			android:authorities="com.ridteam.mafiahelper.contentprovider"
+			android:writePermission="com.ridteam.mafiahelper.contentprovider.permission.WRITE_DBLOCAL"/>
+        
     </application>
 
 </manifest>
