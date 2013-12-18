@@ -2,6 +2,7 @@ package com.ridteam.mafiahelper;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 
+import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
 import com.ridteam.mafiahelper.adapters.PlayersListAdapter;
 import com.ridteam.mafiahelper.controller.AddPlayersController;
 import com.ridteam.mafiahelper.controller.IListController;
@@ -47,14 +49,14 @@ public class MainActivity extends ActionBarActivity {
 	
 	private ListViewFragment getAddPlayersFragment(IModel model) {
 		// Удалить при новой модели
-		ListAdapter adapter = new PlayersListAdapter(this, model.getPlayers());
+		//ListAdapter adapter = new PlayersListAdapter(this, model.getPlayers());
 		
 		// Раскоментировать это для новой модели
-		/*
+		
 		CursorAdapter adapter = new PlayersListAdapter(this, null);
-		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(model.getPlayers(), adapter);
+		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(model.getLoaderPlayers(), adapter);
 		getSupportLoaderManager().initLoader(0, null, loaderCallback);
-		*/
+		
 		
 		IListController controller  = new AddPlayersController(model);
 		ListViewFragment fragment = new ListViewFragment();

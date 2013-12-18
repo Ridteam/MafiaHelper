@@ -75,7 +75,8 @@ public class MafiaHelperTables {
                 "vnd.android.cursor.item/vnd.ridteam.players";
         
         public static Cursor getPlayersWithRoles(SQLiteDatabase mDb) {
-    		String strQ = "select players.*, roles.name, roles.picture from players " +
+    		String strQ = "select players.*, roles.name " + PlayersColumns.ROLE_NAME+
+    				", roles.picture " + PlayersColumns.ROLE_PICTURE + " from players " +
     				"left outer join roles on players.role_id = roles._id ";
     		Log.d("getPlayers", " players, strq= " + strQ);
     		return mDb.rawQuery(strQ, null);

@@ -5,6 +5,7 @@ import com.ridteam.mafiahelper.database.MafiaHelperTables.PlayersTable;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.content.CursorLoader;
 import android.util.Log;
 /**
  * 
@@ -27,6 +28,12 @@ public class ContentProviderModel implements IModel {
 		return mContext.getContentResolver().query(PlayersTable.CONTENT_URI,
 				null, null, null, null);
 
+	}
+	
+	public CursorLoader getLoaderPlayers() {
+		Log.d(TAG,PlayersTable.CONTENT_URI.toString() );
+		return new CursorLoader(mContext, PlayersTable.CONTENT_URI,
+		        null, null, null, null);
 	}
 
 	@Override

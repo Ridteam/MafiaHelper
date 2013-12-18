@@ -1,5 +1,6 @@
 package com.ridteam.mafiahelper.model;
 
+import android.support.v4.content.CursorLoader;
 import android.database.Cursor;
 
 /**
@@ -16,7 +17,12 @@ public interface IModel {
 	 * @return Cursor with players list.
 	 */
 	public Cursor getPlayers();
-	
+	/**
+	 * Return cursor that contains players list.
+	 * 
+	 * @return Cursor with players list.
+	 */
+	public CursorLoader getLoaderPlayers();
 	/**
 	 * Add player to the database.
 	 * 
