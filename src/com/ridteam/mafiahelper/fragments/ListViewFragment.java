@@ -36,10 +36,6 @@ public class ListViewFragment extends ListFragment implements IListView {
 		adapter.setOnContextMenuButtonClickListener(mController);
 	}
 	
-	public void setListAdapter(ListAdapter adapter) {
-		throw new UnsupportedOperationException();
-	}
-	
 	public IListAdapter getListAdapter() {
 		return (IListAdapter) super.getListAdapter();
 	}
