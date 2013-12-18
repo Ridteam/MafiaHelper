@@ -16,10 +16,12 @@ public class ListViewFragment extends ListFragment implements IListView {
 	
 	public void setController(IListController controller) {
 		mController = controller;
-		if(getListView() != null)
-			getListView().setOnItemClickListener(mController);
-		if(getListAdapter() != null)
-			getListAdapter().setOnContextMenuButtonClickListener(mController);
+		if(getView() != null) {
+			if(getListView() != null)
+				getListView().setOnItemClickListener(mController);
+			if(getListAdapter() != null)
+				getListAdapter().setOnContextMenuButtonClickListener(mController);
+		}
 	}
 
 	@Override
