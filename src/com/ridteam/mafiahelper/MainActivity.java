@@ -18,7 +18,6 @@ import com.ridteam.mafiahelper.model.IModel;
 
 public class MainActivity extends ActionBarActivity {
 	private IModel mModel;
-	private IListController mPlayersListController;
 	private ListViewFragment mAddPlayersFragment;
 
 	@Override
@@ -27,11 +26,8 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 		
 		mModel = MafiaHelperApplication.getDataBase(this);
-		ListAdapter adapter = new PlayersListAdapter(this, mModel.getPlayers());
-		mPlayersListController = new AddPlayersController(mModel);
-		mAddPlayersFragment = new ListViewFragment();
-		mAddPlayersFragment.setController(mPlayersListController);
-		mAddPlayersFragment.setListAdapter(adapter);
+		
+		mAddPlayersFragment = getAddPlayersFragment(mModel);
 		
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.add(R.id.fragment, mAddPlayersFragment);
@@ -49,7 +45,23 @@ public class MainActivity extends ActionBarActivity {
 		});
 	}
 	
-	
+	private ListViewFragment getAddPlayersFragment(IModel model) {
+		// Удалить при новой модели
+		ListAdapter adapter = new PlayersListAdapter(this, model.getPlayers());
+		
+		// Раскоментировать это для новой модели
+		/*
+		CursorAdapter adapter = new PlayersListAdapter(this, null);
+		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(model.getPlayers(), adapter);
+		getSupportLoaderManager().initLoader(0, null, loaderCallback);
+		*/
+		
+		IListController controller  = new AddPlayersController(model);
+		ListViewFragment fragment = new ListViewFragment();
+		fragment.setController(controller);
+		fragment.setListAdapter(adapter);
+		return fragment;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
