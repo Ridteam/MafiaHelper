@@ -55,7 +55,7 @@ public class MafiaHelperTables {
 		String VALUE = "value";
 	}
 
-	public static final String CONTENT_AUTHORITY = "com.ridteam.mafiahelper";
+	public static final String CONTENT_AUTHORITY = "com.ridteam.mafiahelper.contentprovider";
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY); 
     private static final String PATH_ROLES = "roles";
