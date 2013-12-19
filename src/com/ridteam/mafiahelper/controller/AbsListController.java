@@ -13,8 +13,10 @@ public abstract class AbsListController implements IListController {
 	private IModel mModel;
 	private IListView mView;
 	
-	public AbsListController(IModel model) {
+	public AbsListController(IModel model, IListView view) {
 		mModel = model;
+		mView = view;
+		mView.setController(this);
 	}
 	
 	@Override

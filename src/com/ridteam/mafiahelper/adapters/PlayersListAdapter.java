@@ -113,6 +113,8 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 			rolePicture = (ImageView) view.findViewById(R.id.imgRolePicture);
 			menuButton = (TextView) view.findViewById(R.id.btnMenu);
 			menuButton.setTag(new MenuButtonHolder());
+			menuButton.setOnClickListener(mMenuClickListener);
+			menuButton.setFocusable(false);
 		}
 	}
 	

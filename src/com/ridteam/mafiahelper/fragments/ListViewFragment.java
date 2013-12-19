@@ -1,5 +1,6 @@
 package com.ridteam.mafiahelper.fragments;
 
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.ContextMenu;
@@ -16,12 +17,10 @@ public class ListViewFragment extends ListFragment implements IListView {
 	
 	public void setController(IListController controller) {
 		mController = controller;
-		if(getView() != null) {
-			if(getListView() != null)
-				getListView().setOnItemClickListener(mController);
-			if(getListAdapter() != null)
-				getListAdapter().setOnContextMenuButtonClickListener(mController);
-		}
+		if(getView() != null && getListView() != null)
+			getListView().setOnItemClickListener(mController);
+		if(getListAdapter() != null)
+			getListAdapter().setOnContextMenuButtonClickListener(mController);
 	}
 
 	@Override
@@ -31,9 +30,16 @@ public class ListViewFragment extends ListFragment implements IListView {
 	}
 
 	@Override
-	public void setListAdapter(IListAdapter adapter) {
+	public void setAdapter(IListAdapter adapter) {
 		super.setListAdapter(adapter);
 		adapter.setOnContextMenuButtonClickListener(mController);
+	}
+	
+	@Override
+	public void setListAdapter(ListAdapter adapter) {
+		if(!(adapter instanceof IListAdapter))
+			throw new UnsupportedOperationException("Use setAdapter(IListAdapter adapter)");
+		super.setListAdapter(adapter);
 	}
 	
 	public IListAdapter getListAdapter() {
@@ -43,6 +49,17 @@ public class ListViewFragment extends ListFragment implements IListView {
 	@Override
 	public void showContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo) {
 		// TODO show context menu
+	}
+
+	@Override
+	public void showDialog(String title, String message,
+			OnClickListener positiveClickListener,
+			OnClickListener negativeClickListener) {
+		OkCancelDialogFragment newFragment = new OkCancelDialogFragment();
+	    newFragment.setPropertys(title, message);
+	    newFragment.setPositiveClickListener(positiveClickListener);
+	    newFragment.setNegativeClickListener(negativeClickListener);
+	    newFragment.show(getFragmentManager(), OkCancelDialogFragment.TAG);
 	}
 
 }
