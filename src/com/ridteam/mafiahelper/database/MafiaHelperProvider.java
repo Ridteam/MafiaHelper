@@ -18,6 +18,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class MafiaHelperProvider extends ContentProvider {
@@ -47,8 +48,83 @@ public class MafiaHelperProvider extends ContentProvider {
     
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		return 0;
+		SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+		int rowsAffected = 0;
+		int id;
+		Log.d(TAG,"delete Uri = "+uri);
+		switch (sUriMatcher.match(uri)) {
+		case PLAYERS_ID:
+			id = Integer.parseInt(uri.getLastPathSegment());
+			if (TextUtils.isEmpty(selection)) {
+	            rowsAffected = db.delete(Tables.PLAYERS,
+	                    BaseColumns._ID + "=" + id, null);
+	        } else {
+	            rowsAffected = db.delete(Tables.PLAYERS,
+	                    selection + " and " + BaseColumns._ID + "=" + id,
+	                    selectionArgs);
+	        }
+			break;
+		case PLAYERS:
+			rowsAffected = db.delete(Tables.PLAYERS, selection, selectionArgs);
+			break;
+		case PLAYER_EFFECTS_ID:
+			id = Integer.parseInt(uri.getLastPathSegment());
+			if (TextUtils.isEmpty(selection)) {
+	            rowsAffected = db.delete(Tables.PLAYER_EFFECTS,
+	                    BaseColumns._ID + "=" + id, null);
+	        } else {
+	            rowsAffected = db.delete(Tables.PLAYER_EFFECTS,
+	                    selection + " and " + BaseColumns._ID + "=" + id,
+	                    selectionArgs);
+	        }
+			break;
+		case PLAYER_EFFECTS:
+			rowsAffected = db.delete(Tables.PLAYERS, selection, selectionArgs);
+		case PLAYER_HISTORY_ID:
+			id = Integer.parseInt(uri.getLastPathSegment());
+			if (TextUtils.isEmpty(selection)) {
+	            rowsAffected = db.delete(Tables.PLAYER_HISTORY,
+	                    BaseColumns._ID + "=" + id, null);
+	        } else {
+	            rowsAffected = db.delete(Tables.PLAYER_HISTORY,
+	                    selection + " and " + BaseColumns._ID + "=" + id,
+	                    selectionArgs);
+	        }
+			break;
+		case PLAYER_HISTORY:
+			rowsAffected = db.delete(Tables.PLAYER_HISTORY, selection, selectionArgs);
+		case ROLES_ID:
+			id = Integer.parseInt(uri.getLastPathSegment());
+			if (TextUtils.isEmpty(selection)) {
+	            rowsAffected = db.delete(Tables.ROLES,
+	                    BaseColumns._ID + "=" + id, null);
+	        } else {
+	            rowsAffected = db.delete(Tables.ROLES,
+	                    selection + " and " + BaseColumns._ID + "=" + id,
+	                    selectionArgs);
+	        }
+			break;
+		case ROLES:
+			rowsAffected = db.delete(Tables.ROLES, selection, selectionArgs);
+		case ROLE_PROPERTIES_ID:
+			id = Integer.parseInt(uri.getLastPathSegment());
+			if (TextUtils.isEmpty(selection)) {
+	            rowsAffected = db.delete(Tables.ROLE_PROPERTIES,
+	                    BaseColumns._ID + "=" + id, null);
+	        } else {
+	            rowsAffected = db.delete(Tables.ROLE_PROPERTIES,
+	                    selection + " and " + BaseColumns._ID + "=" + id,
+	                    selectionArgs);
+	        }
+			break;
+		case ROLE_PROPERTIES:
+			rowsAffected = db.delete(Tables.ROLE_PROPERTIES, selection, selectionArgs);
+		default:
+			throw new IllegalArgumentException("Unknown URI " + uri);
+		}
+		getContext().getContentResolver().notifyChange(uri, null);
+		return rowsAffected;
+
 	}
 
 	@Override
