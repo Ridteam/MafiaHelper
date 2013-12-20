@@ -1,4 +1,4 @@
-package com.ridteam.mafiahelper.fragments;
+package com.ridteam.mafiahelper.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,11 +9,14 @@ import android.support.v4.app.DialogFragment;
 public class OkCancelDialogFragment extends DialogFragment {
 	public static final String TAG = "okCancelDialogFragment";
 	
-	private static final String TITLE = "title";
-	private static final String MESSAGE = "message";
+	public static final String TITLE = "title";
+	public static final String MESSAGE = "message";
 
-	private DialogInterface.OnClickListener mPositiveClickListener;
-	private DialogInterface.OnClickListener mNegativeClickListener;
+	private DialogInterface.OnClickListener mEmptyClickListener = new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int which) { }
+	};
+	private DialogInterface.OnClickListener mPositiveClickListener = mEmptyClickListener;
+	private DialogInterface.OnClickListener mNegativeClickListener = mEmptyClickListener;
 
 	@Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -31,27 +34,20 @@ public class OkCancelDialogFragment extends DialogFragment {
                 	mNegativeClickListener
                 )
                 .create();
+        
     }
 	
-	public void setPropertys(String title, String message) {
-		Bundle args = new Bundle();
-        args.putString(TITLE, title);
-        args.putString(MESSAGE, message);
-        setArguments(args);
-	}
-	
 	public void setPositiveClickListener(DialogInterface.OnClickListener listener) {
-		if(listener == null) mPositiveClickListener = mEmptyClickListener;
-		else mPositiveClickListener = listener;
+		if(listener != null)
+			mPositiveClickListener = listener;
+		else
+			mPositiveClickListener = mEmptyClickListener;
 	}
 	
 	public void setNegativeClickListener(DialogInterface.OnClickListener listener) {
-		if(listener == null) mNegativeClickListener = mEmptyClickListener;
-		else mNegativeClickListener = listener;
+		if(listener != null)
+			mNegativeClickListener = listener;
+		else
+			mNegativeClickListener = mEmptyClickListener;
 	}
-	
-	private DialogInterface.OnClickListener mEmptyClickListener = new DialogInterface.OnClickListener() {
-		@Override
-		public void onClick(DialogInterface dialog, int which) { }
-	};
 }

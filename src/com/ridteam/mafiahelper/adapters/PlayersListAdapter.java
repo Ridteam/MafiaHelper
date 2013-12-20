@@ -23,7 +23,7 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 	private int mRoleNameIndex;
 	private int mRolePictureIndex;
 	
-	private OnContextMenuButtonClickListener mOnContextMenuButtonClickListener;
+	private OnContextButtonClickListener mOnContextMenuButtonClickListener;
 
 	public PlayersListAdapter(Context context, Cursor cursor) {
 		super(context, cursor, 0);
@@ -56,8 +56,8 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 	}
 
 	@Override
-	public void setOnContextMenuButtonClickListener(
-			OnContextMenuButtonClickListener onContextMenuButtonClickListener) {
+	public void setOnContextButtonClickListener(
+			OnContextButtonClickListener onContextMenuButtonClickListener) {
 		mOnContextMenuButtonClickListener = onContextMenuButtonClickListener;
 	}
 	
@@ -94,7 +94,7 @@ public class PlayersListAdapter extends CursorAdapter implements IListAdapter {
 			if(mOnContextMenuButtonClickListener != null) {
 				MenuButtonHolder menuHolder = (MenuButtonHolder) viev.getTag();
 				AdapterView.AdapterContextMenuInfo menuInfo = new AdapterView.AdapterContextMenuInfo(viev, menuHolder.position, menuHolder.id);
-				mOnContextMenuButtonClickListener.onContextMenuButtonClick(viev, menuInfo);
+				mOnContextMenuButtonClickListener.onContextButtonClick(menuInfo);
 			}
 		}
 	};
