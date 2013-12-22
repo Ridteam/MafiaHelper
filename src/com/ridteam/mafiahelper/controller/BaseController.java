@@ -1,20 +1,20 @@
 package com.ridteam.mafiahelper.controller;
 
-import com.ridteam.mafiahelper.model.IModel;
+import com.ridteam.mafiahelper.model.IBaseModel;
 import com.ridteam.mafiahelper.views.IView;
 
 public class BaseController implements IController {
 	
-	private IModel mModel;
+	private IBaseModel mModel;
 	private IView mView;
 	
-	public BaseController(IModel model, IView view) {
+	public BaseController(IBaseModel model, IView view) {
 		mModel = model;
 		mView = view;
 	}
 	
 	@Override
-	public IModel getModel() {
+	public IBaseModel getModel() {
 		return mModel;
 	}
 	

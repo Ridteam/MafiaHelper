@@ -5,7 +5,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 public interface IPlayersController extends IController {
 	
 	public void handleContextMenuClick(AdapterContextMenuInfo menuInfo);
-	public void handleAddplayerClick();
+	public void handleAddPlayerClick();
 	public void handleDeletePlayerClick(long playerId);
 	public void handleSetRoleClick(long playerId);
 	public void handleSetPictureClick(long playerId);

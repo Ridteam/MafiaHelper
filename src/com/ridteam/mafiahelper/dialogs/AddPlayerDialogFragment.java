@@ -32,7 +32,7 @@ public class AddPlayerDialogFragment extends DialogFragment implements OnClickLi
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		Dialog dialog = super.onCreateDialog(savedInstanceState);
-		dialog.setTitle(R.string.dialog_title_add_player);
+		dialog.setTitle(R.string.dialog_add_player_title);
 		return dialog;
 	}
 

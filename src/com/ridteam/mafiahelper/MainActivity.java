@@ -2,6 +2,7 @@ package com.ridteam.mafiahelper;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
@@ -13,46 +14,65 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
-import com.ridteam.mafiahelper.adapters.IListAdapter.OnContextButtonClickListener;
+import com.ridteam.mafiahelper.adapters.IContextedAdapter.OnContextButtonClickListener;
 import com.ridteam.mafiahelper.adapters.PlayersListAdapter;
+import com.ridteam.mafiahelper.adapters.RolesListAdapter;
+import com.ridteam.mafiahelper.controller.AppController;
+import com.ridteam.mafiahelper.controller.IAppController;
 import com.ridteam.mafiahelper.controller.IPlayersController;
+import com.ridteam.mafiahelper.controller.IRolesController;
 import com.ridteam.mafiahelper.controller.PlayersController;
+import com.ridteam.mafiahelper.controller.RolesController;
 import com.ridteam.mafiahelper.dialogs.AddPlayerDialogFragment;
 import com.ridteam.mafiahelper.dialogs.OkCancelDialogFragment;
 import com.ridteam.mafiahelper.fragments.ListViewFragment;
-import com.ridteam.mafiahelper.model.IModel;
+import com.ridteam.mafiahelper.model.IBaseModel;
 import com.ridteam.mafiahelper.views.IView;
 
 public class MainActivity extends ActionBarActivity implements IView {
-	private IModel mModel;
+	private IBaseModel mBaseModel;
 	private IPlayersController mPlayersController;
+	private IRolesController mRolesController;
+	private IAppController mAppController;
 	private ListViewFragment mAddPlayersFragment;
+	private ListViewFragment mRolesListFragment;
 
+//===============================================================================
+//=========== Methods of supper class ===========================================
+//===============================================================================
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		mModel = MafiaHelperApplication.getDataBase(this);
-		mAddPlayersFragment = getAddPlayersFragment(mModel);
-		
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.add(R.id.fragment, mAddPlayersFragment);
-		transaction.commit();
+		mBaseModel = MafiaHelperApplication.getBaseModel(this);
+		mPlayersController = new PlayersController(mBaseModel, this);
+		mRolesController = new RolesController(mBaseModel, this);
+		mAppController = new AppController(mBaseModel, this);
+		mAppController.setScene(SCENE_PLAYERS_LIST);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(mAppController.getMenuResId(), menu);
 		return true;
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_add:
-			mPlayersController.handleAddplayerClick();
+		case R.id.action_add_player:
+			mPlayersController.handleAddPlayerClick();
+			break;
+		case R.id.action_add_role:
+			mRolesController.handleAddRoleClick();
+			break;
+		case R.id.action_show_players:
+			mAppController.handleSetSceneClick(SCENE_PLAYERS_LIST);
+			break;
+		case R.id.action_show_roles:
+			mAppController.handleSetSceneClick(SCENE_ROLES_LIST);
 			break;
 
 		default:
@@ -60,11 +80,34 @@ public class MainActivity extends ActionBarActivity implements IView {
 		}
 		return true;
 	}
+	
+//===============================================================================
+//=========== Methods of IView interface ========================================
+//===============================================================================
 
 	@Override
 	public void setScene(int scene) {
-		// TODO Auto-generated method stub
-		
+		Fragment sceneFragment = null;
+		switch (scene) {
+		case SCENE_PLAYERS_LIST:
+			if(mAddPlayersFragment == null)
+				mAddPlayersFragment = getAddPlayersFragment();
+			sceneFragment = mAddPlayersFragment;
+			break;
+		case SCENE_ROLES_LIST:
+			if(mRolesListFragment == null)
+				mRolesListFragment = getRolesListFragment();
+			sceneFragment = mRolesListFragment;
+			break;
+		case SCENE_GAME:
+			
+			break;
+		}
+		if(sceneFragment != null) {
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			transaction.add(R.id.fragment, sceneFragment);
+			transaction.commit();
+		}
 	}
 
 	@Override
@@ -84,8 +127,8 @@ public class MainActivity extends ActionBarActivity implements IView {
 	@Override
 	public void showDeletePlayerDialog(final long playerId) {
 		Bundle args = new Bundle();
-		args.putString(OkCancelDialogFragment.TITLE, getString(R.string.dialog_title_delete_player));
-        args.putString(OkCancelDialogFragment.MESSAGE, getString(R.string.dialog_message_delete_player));
+		args.putString(OkCancelDialogFragment.TITLE, getString(R.string.dialog_delete_player_title));
+        args.putString(OkCancelDialogFragment.MESSAGE, getString(R.string.dialog_delete_player_message));
 
 		OkCancelDialogFragment dialog = new OkCancelDialogFragment();
 		dialog.setArguments(args);
@@ -109,15 +152,36 @@ public class MainActivity extends ActionBarActivity implements IView {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void showAddRoleDialog() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showEditRoleDialog(long playerId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showDeleteRoleDialog(long playerId) {
+		// TODO Auto-generated method stub
+		
+	}
 	
-	private ListViewFragment getAddPlayersFragment(IModel model) {
+//===============================================================================
+//=========== Private Classes and methods =======================================
+//===============================================================================
+	
+	private ListViewFragment getAddPlayersFragment() {
 		PlayersListAdapter adapter = new PlayersListAdapter(this, null);
-		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(model.getLoaderPlayers(), adapter);
+		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getPlayersLoader(), adapter);
 		getSupportLoaderManager().initLoader(0, null, loaderCallback);
 		
 		ListViewFragment fragment = new ListViewFragment();
 		fragment.setListAdapter(adapter);
-		mPlayersController = new PlayersController(model, this);
 		adapter.setOnContextButtonClickListener(new OnContextButtonClickListener() {
 			@Override
 			public void onContextButtonClick(AdapterContextMenuInfo menuInfo) {
@@ -130,6 +194,30 @@ public class MainActivity extends ActionBarActivity implements IView {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				mPlayersController.handleSetRoleClick(id);
+			}
+		});
+		return fragment;
+	}
+	
+	private ListViewFragment getRolesListFragment() {
+		RolesListAdapter adapter = new RolesListAdapter(this, null);
+		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getRolesLoader(), adapter);
+		getSupportLoaderManager().initLoader(0, null, loaderCallback);
+		
+		ListViewFragment fragment = new ListViewFragment();
+		fragment.setListAdapter(adapter);
+		adapter.setOnContextButtonClickListener(new OnContextButtonClickListener() {
+			@Override
+			public void onContextButtonClick(AdapterContextMenuInfo menuInfo) {
+				mRolesController.handleContextMenuClick(menuInfo);
+			}
+		});
+		fragment.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mRolesController.handleEditRoleClick(id);
 			}
 		});
 		return fragment;

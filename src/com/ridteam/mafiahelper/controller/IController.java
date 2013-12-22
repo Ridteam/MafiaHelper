@@ -1,6 +1,6 @@
 package com.ridteam.mafiahelper.controller;
 
-import com.ridteam.mafiahelper.model.IModel;
+import com.ridteam.mafiahelper.model.IBaseModel;
 import com.ridteam.mafiahelper.views.IView;
 
 
@@ -12,5 +12,5 @@ import com.ridteam.mafiahelper.views.IView;
  */
 public interface IController {
 	public IView getView();
-	public IModel getModel();
+	public IBaseModel getModel();
 }

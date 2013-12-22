@@ -1,5 +1,11 @@
 package com.ridteam.mafiahelper.model;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.net.Uri;
+import android.support.v4.content.CursorLoader;
+import android.util.Log;
+
 import com.ridteam.mafiahelper.database.MafiaHelperTables.PlayerEffectsColumns;
 import com.ridteam.mafiahelper.database.MafiaHelperTables.PlayerEffectsTable;
 import com.ridteam.mafiahelper.database.MafiaHelperTables.PlayerHistoryTable;
@@ -7,19 +13,12 @@ import com.ridteam.mafiahelper.database.MafiaHelperTables.PlayersTable;
 import com.ridteam.mafiahelper.database.MafiaHelperTables.RolePropertiesTable;
 import com.ridteam.mafiahelper.database.MafiaHelperTables.RolesTable;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.support.v4.content.CursorLoader;
-import android.util.Log;
-
 /**
  * 
  * @author Foenix Wrapper class for database actorlive.db queries
  */
 
-public class ContentProviderModel implements IModel {
+public class ContentProviderModel implements IBaseModel {
 	private static final String TAG = "ContentProviderModel";
 	private Context mContext;
 
@@ -29,15 +28,7 @@ public class ContentProviderModel implements IModel {
 		this.mContext = context;
 	}
 
-	@Override
-	public Cursor getPlayers() {
-		Log.d(TAG, PlayersTable.CONTENT_URI.toString());
-		return mContext.getContentResolver().query(PlayersTable.CONTENT_URI,
-				null, null, null, null);
-
-	}
-
-	public CursorLoader getLoaderPlayers() {
+	public CursorLoader getPlayersLoader() {
 		Log.d(TAG, PlayersTable.CONTENT_URI.toString());
 		return new CursorLoader(mContext, PlayersTable.CONTENT_URI, null, null,
 				null, null);
@@ -119,7 +110,7 @@ public class ContentProviderModel implements IModel {
 	}
 
 	@Override
-	public Cursor getPlayersEffects(long playerId) {
+	public CursorLoader getPlayersEffectsLoader(long playerId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -156,13 +147,13 @@ public class ContentProviderModel implements IModel {
 	}
 
 	@Override
-	public Cursor getPlayersHistory() {
+	public CursorLoader getPlayersHistoryLoader() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Cursor getPlayersHistory(int limit) {
+	public CursorLoader getPlayersHistoryLoader(int limit) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -182,13 +173,13 @@ public class ContentProviderModel implements IModel {
 	}
 
 	@Override
-	public Cursor getRoles() {
+	public CursorLoader getRolesLoader() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Cursor getRole(long roleId) {
+	public CursorLoader getRoleLoader(long roleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -214,7 +205,7 @@ public class ContentProviderModel implements IModel {
 	}
 
 	@Override
-	public Cursor getRolePropertys(long roleId) {
+	public CursorLoader getRolePropertysLoader(long roleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

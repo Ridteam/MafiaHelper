@@ -2,13 +2,13 @@ package com.ridteam.mafiahelper.controller;
 
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
-import com.ridteam.mafiahelper.model.IModel;
+import com.ridteam.mafiahelper.model.IBaseModel;
 import com.ridteam.mafiahelper.views.IView;
 
 
 public class PlayersController extends BaseController implements IPlayersController {
 	
-	public PlayersController(IModel model, IView view) {
+	public PlayersController(IBaseModel model, IView view) {
 		super(model, view);
 	}
 
@@ -18,7 +18,7 @@ public class PlayersController extends BaseController implements IPlayersControl
 	}
 
 	@Override
-	public void handleAddplayerClick() {
+	public void handleAddPlayerClick() {
 		getView().showAddPlayersDialog();
 	}
 

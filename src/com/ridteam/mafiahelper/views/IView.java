@@ -3,6 +3,7 @@ package com.ridteam.mafiahelper.views;
 import android.view.ContextMenu;
 import android.widget.AdapterView;
 
+
 public interface IView {
 	public static final int SCENE_PLAYERS_LIST	= 1;
 	public static final int SCENE_GAME			= 2;
@@ -17,4 +18,8 @@ public interface IView {
 	public void showDeletePlayerDialog(long playerId);
 	public void showSetPlayerRoleDialog(long playerId);
 	public void showSetPlayerPictureDialog(long playerId);
+	
+	public void showAddRoleDialog();
+	public void showEditRoleDialog(long playerId);
+	public void showDeleteRoleDialog(long playerId);
 }

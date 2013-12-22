@@ -1,7 +1,6 @@
 package com.ridteam.mafiahelper.model;
 
 import android.support.v4.content.CursorLoader;
-import android.database.Cursor;
 
 /**
  * Provide a methods for work with database.
@@ -9,20 +8,14 @@ import android.database.Cursor;
  * @author Shurygin Denis
  *
  */
-public interface IModel {
+public interface IBaseModel {
 
 	/**
 	 * Return cursor that contains players list.
 	 * 
 	 * @return Cursor with players list.
 	 */
-	public Cursor getPlayers();
-	/**
-	 * Return cursor that contains players list.
-	 * 
-	 * @return Cursor with players list.
-	 */
-	public CursorLoader getLoaderPlayers();
+	public CursorLoader getPlayersLoader();
 	/**
 	 * Add player to the database.
 	 * 
@@ -70,24 +63,24 @@ public interface IModel {
 	public void resetAccuse();
 	public void increaseRebuke(long playerId, int value);
 
-	public Cursor getPlayersEffects(long playerId);
+	public CursorLoader getPlayersEffectsLoader(long playerId);
 	public void addPlayersEffects(long playerId, int type, int time);
 	public void removePlayersEffects(long playerId, int type);
 	public void removePlayersEffects(long playerId);
 	public void decreasePlayersEffectsTime(int value);
 
-	public Cursor getPlayersHistory();
-	public Cursor getPlayersHistory(int limit);
+	public CursorLoader getPlayersHistoryLoader();
+	public CursorLoader getPlayersHistoryLoader(int limit);
 	public void addPlayersHistory(String name, String date, boolean isWin);
 	public void removePlayersHistory(long playerId);
 
-	public Cursor getRoles();
-	public Cursor getRole(long roleId);
+	public CursorLoader getRolesLoader();
+	public CursorLoader getRoleLoader(long roleId);
 	public void addRole(String name, String desc, int side, String picture);
 	public void editRole(long roleId, String name, String desc, int side, String picture);
 	public void removeRole(long roleId);
 	
-	public Cursor getRolePropertys(long roleId);
+	public CursorLoader getRolePropertysLoader(long roleId);
 	public void addRoleProperty(long roleId, int type, int value);
 	public void removeRolePropertysByRole(long roleId);
 }

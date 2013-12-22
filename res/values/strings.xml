@@ -2,13 +2,29 @@
 <resources>
 
     <string name="app_name">MafiaHelper</string>
-    <string name="action_settings">Settings</string>
     <string name="caption_role_none">-</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>
-    <string name="dialog_title_delete_player">Delete Player</string>
-    <string name="dialog_message_delete_player">Delete player from the list?</string>
-    <string name="dialog_title_add_player">Add Player</string>
+    
+    <string name="dialog_delete_player_title">Delete Player</string>
+    <string name="dialog_delete_player_message">Delete player from the list?</string>
+    <string name="dialog_add_player_title">Add Player</string>
+    
+    <string name="dialog_add_role_title">Add role</string>
+    <string name="dialog_edit_role_title">Edit role</string>
+    <string name="dialog_add_role_name">Role name</string>
+    <string name="dialog_add_role_side">Side</string>
+    <string name="dialog_add_role_desc">Description</string>
+    
     <string name="action_add">Add</string>
+    <string name="action_roles">Roles</string>
+    <string name="action_players">Players</string>
+    
+    <string-array name="side">
+        <item >Man for himself</item>
+        <item >Peace</item>
+        <item >Mafia</item>
+        <item >Yakudza</item>
+    </string-array>
 
 </resources>
