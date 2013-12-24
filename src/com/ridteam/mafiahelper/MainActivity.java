@@ -106,7 +106,7 @@ public class MainActivity extends ActionBarActivity implements IView {
 		}
 		if(sceneFragment != null) {
 			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-			transaction.add(R.id.fragment, sceneFragment);
+			transaction.replace(R.id.fragment, sceneFragment);
 			transaction.commit();
 		}
 	}
