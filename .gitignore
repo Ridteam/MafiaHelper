@@ -44,3 +44,4 @@ local.properties
 
 project.properties
 *.properties
+lint.xml
