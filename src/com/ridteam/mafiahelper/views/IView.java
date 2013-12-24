@@ -1,6 +1,7 @@
 package com.ridteam.mafiahelper.views;
 
-import android.view.ContextMenu;
+import com.ridteam.mafiahelper.controller.IListController;
+
 import android.widget.AdapterView;
 
 
@@ -11,8 +12,7 @@ public interface IView {
 	
 	public void setScene(int scene);
 	
-	public void showContextMenu(ContextMenu menu,
-			AdapterView.AdapterContextMenuInfo menuInfo);
+	public void showContextMenu(IListController controller, AdapterView.AdapterContextMenuInfo menuInfo);
 	
 	public void showAddPlayersDialog();
 	public void showDeletePlayerDialog(long playerId);

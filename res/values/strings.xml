@@ -16,9 +16,13 @@
     <string name="dialog_add_role_side">Side</string>
     <string name="dialog_add_role_desc">Description</string>
     
-    <string name="action_add">Add</string>
     <string name="action_roles">Roles</string>
     <string name="action_players">Players</string>
+    <string name="action_add_player">Add</string>
+    <string name="action_delete_player">Delete</string>
+    <string name="action_add_role">Add</string>
+    <string name="action_delete_role">Delete</string>
+    <string name="action_edit_role">Edit</string>
     
     <string-array name="side">
         <item >Man for himself</item>

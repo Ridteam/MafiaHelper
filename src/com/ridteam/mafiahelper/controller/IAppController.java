@@ -9,4 +9,5 @@ public interface IAppController extends IController {
 	
 	public int getScene();
 	public int getMenuResId();
+	public int getContextMenuResId();
 }

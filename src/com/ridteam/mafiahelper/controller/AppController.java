@@ -39,4 +39,15 @@ public class AppController extends BaseController implements IAppController{
 		return R.menu.menu_empty;
 	}
 
+	@Override
+	public int getContextMenuResId() {
+		switch (mScene) {
+		case IView.SCENE_PLAYERS_LIST:
+			return R.menu.context_menu_players_list;
+		case IView.SCENE_ROLES_LIST:
+			return R.menu.menu_roles_list;
+		}
+		return R.menu.menu_empty;
+	}
+
 }

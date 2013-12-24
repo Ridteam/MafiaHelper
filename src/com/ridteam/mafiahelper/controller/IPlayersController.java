@@ -2,7 +2,7 @@ package com.ridteam.mafiahelper.controller;
 
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
-public interface IPlayersController extends IController {
+public interface IPlayersController extends IController, IListController {
 	
 	public void handleContextMenuClick(AdapterContextMenuInfo menuInfo);
 	public void handleAddPlayerClick();

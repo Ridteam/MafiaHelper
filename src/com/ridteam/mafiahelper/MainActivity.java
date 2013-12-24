@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.view.ContextMenu;
+import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +19,7 @@ import com.ridteam.mafiahelper.adapters.PlayersListAdapter;
 import com.ridteam.mafiahelper.adapters.RolesListAdapter;
 import com.ridteam.mafiahelper.controller.AppController;
 import com.ridteam.mafiahelper.controller.IAppController;
+import com.ridteam.mafiahelper.controller.IListController;
 import com.ridteam.mafiahelper.controller.IPlayersController;
 import com.ridteam.mafiahelper.controller.IRolesController;
 import com.ridteam.mafiahelper.controller.PlayersController;
@@ -111,10 +112,16 @@ public class MainActivity extends ActionBarActivity implements IView {
 	}
 
 	@Override
-	public void showContextMenu(ContextMenu menu,
-			AdapterContextMenuInfo menuInfo) {
-		// TODO Auto-generated method stub
-		
+	public void showContextMenu(IListController controller, final AdapterContextMenuInfo menuInfo) {
+		PopupMenu popupMenu = new PopupMenu(this, menuInfo.targetView);
+		controller.createContextMenu(popupMenu.getMenuInflater(), popupMenu.getMenu(), menuInfo);
+		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem menuItem) {
+				return performContextMenuItemClick(menuItem, menuInfo);
+			}
+		});
+		popupMenu.show();
 	}
 
 	@Override
@@ -174,6 +181,17 @@ public class MainActivity extends ActionBarActivity implements IView {
 //===============================================================================
 //=========== Private Classes and methods =======================================
 //===============================================================================
+	private boolean performContextMenuItemClick(MenuItem menuItem, AdapterContextMenuInfo menuInfo) {
+		switch (menuItem.getItemId()) {
+		case R.id.action_delete_player:
+			mPlayersController.handleDeletePlayerClick(menuInfo.id);
+			break;
+
+		default:
+			break;
+		}
+		return true;
+	}
 	
 	private ListViewFragment getAddPlayersFragment() {
 		PlayersListAdapter adapter = new PlayersListAdapter(this, null);

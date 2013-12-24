@@ -1,7 +1,10 @@
 package com.ridteam.mafiahelper.controller;
 
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
+import com.ridteam.mafiahelper.R;
 import com.ridteam.mafiahelper.model.IBaseModel;
 import com.ridteam.mafiahelper.views.IView;
 
@@ -14,7 +17,7 @@ public class PlayersController extends BaseController implements IPlayersControl
 
 	@Override
 	public void handleContextMenuClick(AdapterContextMenuInfo menuInfo) {
-		getView().showDeletePlayerDialog(menuInfo.id);
+		getView().showContextMenu(this, menuInfo);
 	}
 
 	@Override
@@ -24,8 +27,7 @@ public class PlayersController extends BaseController implements IPlayersControl
 
 	@Override
 	public void handleDeletePlayerClick(long playerId) {
-		// TODO Auto-generated method stub
-		
+		getView().showDeletePlayerDialog(playerId);
 	}
 
 	@Override
@@ -53,13 +55,17 @@ public class PlayersController extends BaseController implements IPlayersControl
 
 	@Override
 	public void setRole(long playerId, long roleId) {
-		// TODO Auto-generated method stub
-		
+		getModel().setRole(playerId, roleId);
 	}
 
 	@Override
 	public void setPicture(long playerId, String picture) {
-		// TODO Auto-generated method stub
-		
+		// TODO
+	}
+
+	@Override
+	public void createContextMenu(MenuInflater inflater, Menu menu,
+			AdapterContextMenuInfo menuInfo) {
+		inflater.inflate(R.menu.context_menu_players_list, menu);
 	}
 }
