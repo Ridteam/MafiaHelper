@@ -42,20 +42,20 @@ public interface IBaseModel {
 	 * @param playerId Player ID.
 	 * @param isLive True is live false is dead.
 	 */
-	public void setLive(long playerId, boolean isLive);
+	public void setAlive(long playerId, boolean isAlive);
 	
 	/**
 	 * Set mark as dead for specified player. 
 	 * @param playerId Player ID.
 	 * @param isMarkAsDead True - set mark, false - drop mark.
 	 */
-	public void setMarkAsDead(long playerId, boolean isMarkAsDead);
+	public void setMarkedAsDead(long playerId, boolean isMarkedAsDead);
 	
 	/**
 	 * Kill all players that been marked as dead via 
 	 * {@link #setMarkAsDead}.
 	 */
-	public void killMarkAsDead();
+	public void killMarkedAsDead();
 	public void setNomination(long playerId, boolean isNominant);
 	public void setNomination(int minimumAccuse);
 	public void resetNomination();
@@ -69,9 +69,9 @@ public interface IBaseModel {
 	public void removePlayersEffects(long playerId);
 	public void decreasePlayersEffectsTime(int value);
 
-	public CursorLoader getPlayersHistoryLoader();
-	public CursorLoader getPlayersHistoryLoader(int limit);
-	public void addPlayersHistory(String name, String date, boolean isWin);
+	public CursorLoader getPlayerHistoryLoader();
+	public CursorLoader getPlayerHistoryLoader(int limit);
+	public void addPlayerHistory(String name, String date, boolean isWin);
 	public void removePlayersHistory(long playerId);
 
 	public CursorLoader getRolesLoader();
@@ -80,7 +80,7 @@ public interface IBaseModel {
 	public void editRole(long roleId, String name, String desc, int side, String picture);
 	public void removeRole(long roleId);
 	
-	public CursorLoader getRolePropertysLoader(long roleId);
+	public CursorLoader getRolePropertiesLoader(long roleId);
 	public void addRoleProperty(long roleId, int type, int value);
 	public void removeRolePropertysByRole(long roleId);
 }
