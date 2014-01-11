@@ -15,15 +15,15 @@ import com.ridteam.mafiahelper.controller.IPlayersController;
 public class AddPlayerDialogFragment extends DialogFragment implements OnClickListener{
 	public static final String TAG = "addPlayerDialogFragment";
 	
-	private TextView mPlayerName;
+	private TextView mName;
 	private IPlayersController mController;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.dialog_add_players, null);
-		mPlayerName = (TextView) view.findViewById(R.id.edAdd);
-		View buttonAdd = view.findViewById(R.id.btnAdd);
+		mName = (TextView) view.findViewById(R.id.edAdd);
+		View buttonAdd = view.findViewById(R.id.btnOk);
 		buttonAdd.setOnClickListener(this);
 		return view;
 	}
@@ -39,7 +39,7 @@ public class AddPlayerDialogFragment extends DialogFragment implements OnClickLi
 	@Override
 	public void onClick(View v) {
 		if(mController != null)
-			mController.addPlayer(mPlayerName.getText().toString());
+			mController.addPlayer(mName.getText().toString());
 		dismiss();
 	}
 	

@@ -1,5 +1,7 @@
 package com.ridteam.mafiahelper.controller;
 
+import android.view.Menu;
+
 
 public interface IAppController extends IController {
 	
@@ -9,5 +11,6 @@ public interface IAppController extends IController {
 	
 	public int getScene();
 	public int getMenuResId();
+	public void prepareMenu(Menu menu);
 	public int getContextMenuResId();
 }

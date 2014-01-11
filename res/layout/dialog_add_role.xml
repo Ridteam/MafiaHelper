@@ -10,7 +10,7 @@
         android:gravity="center_vertical" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/imgRolePicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_vertical_margin"
@@ -22,7 +22,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dialog_add_role_name"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -31,14 +31,15 @@
                 android:id="@+id/edRoleName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10" />
+                android:ems="10"
+                android:inputType="text" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/dialog_add_role_side"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -50,31 +51,31 @@
         android:entries="@array/side" />
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/dialog_add_role_desc"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/edRoleDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" />
+        android:ems="10"
+        android:inputType="text" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/btnCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@android:string/cancel" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnOk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

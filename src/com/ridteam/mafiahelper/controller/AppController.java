@@ -1,15 +1,18 @@
 package com.ridteam.mafiahelper.controller;
 
+import android.view.Menu;
+
 import com.ridteam.mafiahelper.R;
 import com.ridteam.mafiahelper.model.IBaseModel;
 import com.ridteam.mafiahelper.views.IView;
 
 public class AppController extends BaseController implements IAppController{
 	private int mScene;
-	
+	private IView mView;
 
 	public AppController(IBaseModel model, IView view) {
-		super(model, view);
+		super(model);
+		mView = view;
 	}
 
 	@Override
@@ -20,7 +23,7 @@ public class AppController extends BaseController implements IAppController{
 	@Override
 	public void setScene(int sceneId) {
 		mScene = sceneId;
-		getView().setScene(sceneId);
+		mView.setScene(sceneId);
 	}
 
 	@Override
@@ -30,13 +33,23 @@ public class AppController extends BaseController implements IAppController{
 
 	@Override
 	public int getMenuResId() {
+		return R.menu.menu_main;
+	}
+
+	private static final int[] GROUPS_LIST = {R.id.action_group_players, R.id.action_group_roles};
+	@Override
+	public void prepareMenu(Menu menu) {
+		int groupId = 0;
 		switch (mScene) {
 		case IView.SCENE_PLAYERS_LIST:
-			return R.menu.menu_players_list;
+			groupId = R.id.action_group_players;
+			break;
 		case IView.SCENE_ROLES_LIST:
-			return R.menu.menu_roles_list;
+			groupId = R.id.action_group_roles;
+			break;
 		}
-		return R.menu.menu_empty;
+		for(int i = 0; i < GROUPS_LIST.length; i++)
+			menu.setGroupVisible(GROUPS_LIST[i], GROUPS_LIST[i] == groupId);
 	}
 
 	@Override
@@ -45,7 +58,7 @@ public class AppController extends BaseController implements IAppController{
 		case IView.SCENE_PLAYERS_LIST:
 			return R.menu.context_menu_players_list;
 		case IView.SCENE_ROLES_LIST:
-			return R.menu.menu_roles_list;
+			return R.menu.context_menu_roles_list;
 		}
 		return R.menu.menu_empty;
 	}

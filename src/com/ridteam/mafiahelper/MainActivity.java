@@ -1,32 +1,23 @@
 package com.ridteam.mafiahelper;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemClickListener;
 
-import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
-import com.ridteam.mafiahelper.adapters.IContextedAdapter.OnContextButtonClickListener;
-import com.ridteam.mafiahelper.adapters.PlayersListAdapter;
-import com.ridteam.mafiahelper.adapters.RolesListAdapter;
 import com.ridteam.mafiahelper.controller.AppController;
 import com.ridteam.mafiahelper.controller.IAppController;
-import com.ridteam.mafiahelper.controller.IListController;
 import com.ridteam.mafiahelper.controller.IPlayersController;
 import com.ridteam.mafiahelper.controller.IRolesController;
 import com.ridteam.mafiahelper.controller.PlayersController;
 import com.ridteam.mafiahelper.controller.RolesController;
 import com.ridteam.mafiahelper.dialogs.AddPlayerDialogFragment;
-import com.ridteam.mafiahelper.dialogs.OkCancelDialogFragment;
+import com.ridteam.mafiahelper.dialogs.AddRoleDialogFragment;
 import com.ridteam.mafiahelper.fragments.ListViewFragment;
+import com.ridteam.mafiahelper.fragments.PlayersListFragment;
+import com.ridteam.mafiahelper.fragments.RolesListFragment;
 import com.ridteam.mafiahelper.model.IBaseModel;
 import com.ridteam.mafiahelper.views.IView;
 
@@ -47,8 +38,8 @@ public class MainActivity extends ActionBarActivity implements IView {
 		setContentView(R.layout.activity_main);
 		
 		mBaseModel = MafiaHelperApplication.getBaseModel(this);
-		mPlayersController = new PlayersController(mBaseModel, this);
-		mRolesController = new RolesController(mBaseModel, this);
+		mPlayersController = new PlayersController(mBaseModel);
+		mRolesController = new RolesController(mBaseModel);
 		mAppController = new AppController(mBaseModel, this);
 		mAppController.setScene(SCENE_PLAYERS_LIST);
 	}
@@ -61,13 +52,19 @@ public class MainActivity extends ActionBarActivity implements IView {
 	}
 	
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		mAppController.prepareMenu(menu);
+		return true;
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_add_player:
-			mPlayersController.handleAddPlayerClick();
+			showAddPlayersDialog();
 			break;
 		case R.id.action_add_role:
-			mRolesController.handleAddRoleClick();
+			showAddRoleDialog();
 			break;
 		case R.id.action_show_players:
 			mAppController.handleSetSceneClick(SCENE_PLAYERS_LIST);
@@ -92,12 +89,12 @@ public class MainActivity extends ActionBarActivity implements IView {
 		switch (scene) {
 		case SCENE_PLAYERS_LIST:
 			if(mAddPlayersFragment == null)
-				mAddPlayersFragment = getAddPlayersFragment();
+				mAddPlayersFragment = new PlayersListFragment();
 			sceneFragment = mAddPlayersFragment;
 			break;
 		case SCENE_ROLES_LIST:
 			if(mRolesListFragment == null)
-				mRolesListFragment = getRolesListFragment();
+				mRolesListFragment = new RolesListFragment();
 			sceneFragment = mRolesListFragment;
 			break;
 		case SCENE_GAME:
@@ -110,135 +107,20 @@ public class MainActivity extends ActionBarActivity implements IView {
 			transaction.commit();
 		}
 	}
-
-	@Override
-	public void showContextMenu(IListController controller, final AdapterContextMenuInfo menuInfo) {
-		PopupMenu popupMenu = new PopupMenu(this, menuInfo.targetView);
-		controller.createContextMenu(popupMenu.getMenuInflater(), popupMenu.getMenu(), menuInfo);
-		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(MenuItem menuItem) {
-				return performContextMenuItemClick(menuItem, menuInfo);
-			}
-		});
-		popupMenu.show();
-	}
-
-	@Override
-	public void showAddPlayersDialog() {
-		AddPlayerDialogFragment dialog = new AddPlayerDialogFragment();
-		dialog.setController(mPlayersController);
-		dialog.show(getSupportFragmentManager(), AddPlayerDialogFragment.TAG);
-	}
-
-	@Override
-	public void showDeletePlayerDialog(final long playerId) {
-		Bundle args = new Bundle();
-		args.putString(OkCancelDialogFragment.TITLE, getString(R.string.dialog_delete_player_title));
-        args.putString(OkCancelDialogFragment.MESSAGE, getString(R.string.dialog_delete_player_message));
-
-		OkCancelDialogFragment dialog = new OkCancelDialogFragment();
-		dialog.setArguments(args);
-		dialog.setPositiveClickListener(new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				mPlayersController.deletePlayer(playerId);
-			}
-		});
-		dialog.show(getSupportFragmentManager(), OkCancelDialogFragment.TAG);
-	}
-
-	@Override
-	public void showSetPlayerRoleDialog(long playerId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void showSetPlayerPictureDialog(long playerId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void showAddRoleDialog() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void showEditRoleDialog(long playerId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void showDeleteRoleDialog(long playerId) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 //===============================================================================
 //=========== Private Classes and methods =======================================
 //===============================================================================
-	private boolean performContextMenuItemClick(MenuItem menuItem, AdapterContextMenuInfo menuInfo) {
-		switch (menuItem.getItemId()) {
-		case R.id.action_delete_player:
-			mPlayersController.handleDeletePlayerClick(menuInfo.id);
-			break;
 
-		default:
-			break;
-		}
-		return true;
+	private void showAddPlayersDialog() {
+		AddPlayerDialogFragment dialog = new AddPlayerDialogFragment();
+		dialog.setController(mPlayersController);
+		dialog.show(getSupportFragmentManager(), AddPlayerDialogFragment.TAG);
 	}
 	
-	private ListViewFragment getAddPlayersFragment() {
-		PlayersListAdapter adapter = new PlayersListAdapter(this, null);
-		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getPlayersLoader(), adapter);
-		getSupportLoaderManager().initLoader(0, null, loaderCallback);
-		
-		ListViewFragment fragment = new ListViewFragment();
-		fragment.setListAdapter(adapter);
-		adapter.setOnContextButtonClickListener(new OnContextButtonClickListener() {
-			@Override
-			public void onContextButtonClick(AdapterContextMenuInfo menuInfo) {
-				mPlayersController.handleContextMenuClick(menuInfo);
-			}
-		});
-		fragment.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				mPlayersController.handleSetRoleClick(id);
-			}
-		});
-		return fragment;
-	}
-	
-	private ListViewFragment getRolesListFragment() {
-		RolesListAdapter adapter = new RolesListAdapter(this, null);
-		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getRolesLoader(), adapter);
-		getSupportLoaderManager().initLoader(0, null, loaderCallback);
-		
-		ListViewFragment fragment = new ListViewFragment();
-		fragment.setListAdapter(adapter);
-		adapter.setOnContextButtonClickListener(new OnContextButtonClickListener() {
-			@Override
-			public void onContextButtonClick(AdapterContextMenuInfo menuInfo) {
-				mRolesController.handleContextMenuClick(menuInfo);
-			}
-		});
-		fragment.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				mRolesController.handleEditRoleClick(id);
-			}
-		});
-		return fragment;
+	private void showAddRoleDialog() {
+		AddRoleDialogFragment dialog = AddRoleDialogFragment.create(mRolesController, 0);
+		dialog.show(getSupportFragmentManager(), AddPlayerDialogFragment.TAG);
 	}
 
 }
