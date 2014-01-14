@@ -10,20 +10,17 @@ public class RolesController extends BaseController implements IRolesController 
 
 	@Override
 	public void addRole(String name, String desc, int side, String picture) {
-		// TODO Auto-generated method stub
-		
+		getModel().addRole(name, desc, side, picture);
 	}
 
 	@Override
 	public void editRole(long roleId, String name, String desc, int side,
 			String picture) {
-		// TODO Auto-generated method stub
-		
+		getModel().editRole(roleId, name, desc, side, picture);
 	}
 
 	@Override
 	public void deleteRole(long roleId) {
-		// TODO Auto-generated method stub
-		
+		getModel().removeRole(roleId);
 	}
 }

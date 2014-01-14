@@ -31,6 +31,7 @@ public class PlayersListFragment extends ListViewFragment implements OnContextBu
 		
 		PlayersListAdapter adapter = new PlayersListAdapter(activity, null);
 		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getPlayersLoader(), adapter);
+		getSupportLoaderManager().destroyLoader(0);
 		getSupportLoaderManager().initLoader(0, null, loaderCallback);
 		
 		setListAdapter(adapter);

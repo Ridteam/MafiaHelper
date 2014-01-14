@@ -14,6 +14,7 @@ import com.ridteam.mafiahelper.utils.ImageUtils;
 public class RolesListAdapter extends ContextedCursorAdapter<RolesListAdapter.ViewHolder> {
 	private int mIdIndex;
 	private int mRoleNameIndex;
+	private int mRoleDescIndex;
 	private int mRolePictureIndex;
 
 	public RolesListAdapter(Context context, Cursor cursor) {
@@ -22,9 +23,11 @@ public class RolesListAdapter extends ContextedCursorAdapter<RolesListAdapter.Vi
 	
 	void bindHolder(ViewHolder holder, Context context, Cursor cursor) {
 		String roleName = cursor.getString(mRoleNameIndex);
+		String description = cursor.getString(mRoleDescIndex);
 		String rolePicture = cursor.getString(mRolePictureIndex);
-		
+
 		holder.roleName.setText(roleName);
+		holder.description.setText(description);
 		ImageUtils.setImage(holder.rolePicture, ImageUtils.ROLES_FOLDER, rolePicture, context);
 		
 		@SuppressWarnings("unchecked")
@@ -40,12 +43,14 @@ public class RolesListAdapter extends ContextedCursorAdapter<RolesListAdapter.Vi
 		return holder;
 	}
 
+	@Override
 	void findColumns() {
 		Cursor cursor = getCursor();
 		if(cursor != null) {
 			mIdIndex = cursor.getColumnIndex("_id");
-			mRoleNameIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.ROLE_NAME);
-			mRolePictureIndex = cursor.getColumnIndex(MafiaHelperTables.PlayersColumns.ROLE_PICTURE);
+			mRoleNameIndex = cursor.getColumnIndex(MafiaHelperTables.RolesColumns.NAME);
+			mRoleDescIndex = cursor.getColumnIndex(MafiaHelperTables.RolesColumns.DESC);
+			mRolePictureIndex = cursor.getColumnIndex(MafiaHelperTables.RolesColumns.PICTURE);
 		}
 	}
 	

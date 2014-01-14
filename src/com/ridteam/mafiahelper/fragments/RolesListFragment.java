@@ -33,6 +33,7 @@ public class RolesListFragment extends ListViewFragment implements OnContextButt
 
 		RolesListAdapter adapter = new RolesListAdapter(activity, null);
 		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getRolesLoader(), adapter);
+		getSupportLoaderManager().destroyLoader(0);
 		getSupportLoaderManager().initLoader(0, null, loaderCallback);
 		
 		setListAdapter(adapter);
