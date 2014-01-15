@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.ridteam.mafiahelper.MafiaHelperApplication;
 import com.ridteam.mafiahelper.R;
-import com.ridteam.mafiahelper.controller.IRolesController;
 import com.ridteam.mafiahelper.database.MafiaHelperTables;
 import com.ridteam.mafiahelper.model.IBaseModel;
 import com.ridteam.mafiahelper.utils.ImageUtils;
@@ -22,9 +22,8 @@ public class AddRoleDialogFragment extends DialogFragment {
 	public static final String TAG = "addPlayerDialogFragment";
 	public static final String ROLE_ID = "roleId";
 	
-	public static AddRoleDialogFragment create(IRolesController controller, long roleId) {
+	public static AddRoleDialogFragment create(long roleId) {
 		AddRoleDialogFragment fragment = new AddRoleDialogFragment();
-		fragment.setController(controller);
 		
 		Bundle args = new Bundle();
 		args.putLong(ROLE_ID, roleId);
@@ -39,7 +38,6 @@ public class AddRoleDialogFragment extends DialogFragment {
 	private ImageView mPicture;
 	private Spinner mSide;
 	private String mPictureUri;
-	private IRolesController mController;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +64,7 @@ public class AddRoleDialogFragment extends DialogFragment {
 		buttonCancel.setOnClickListener(mCancelClickListener);
 		
 		if(mRoleId != 0) {
-			IBaseModel model = mController.getModel();
+			IBaseModel model = MafiaHelperApplication.getBaseModel(getActivity());
 			Cursor role = model.getRoleLoader(mRoleId).loadInBackground();
 			if(role.moveToFirst()) {
 				String name = role.getString(role.getColumnIndex(MafiaHelperTables.RolesColumns.NAME));
@@ -95,10 +93,6 @@ public class AddRoleDialogFragment extends DialogFragment {
 		return dialog;
 	}
 	
-	public void setController(IRolesController controller) {
-		mController = controller;
-	}
-	
 	private OnClickListener mCancelClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -109,13 +103,14 @@ public class AddRoleDialogFragment extends DialogFragment {
 	private OnClickListener mOkClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if(mController != null) {
+			IBaseModel model = MafiaHelperApplication.getBaseModel(getActivity());
+			if(model != null) {
 				String roleName = mName.getText().toString();
 				String rolrDesc = mDescription.getText().toString();
 				int roleSide = mSide.getSelectedItemPosition();
 				
-				if(mRoleId != 0) mController.editRole(mRoleId, roleName, rolrDesc, roleSide, mPictureUri);
-				else mController.addRole(roleName, rolrDesc, roleSide, mPictureUri);
+				if(mRoleId != 0) model.editRole(mRoleId, roleName, rolrDesc, roleSide, mPictureUri);
+				else model.addRole(roleName, rolrDesc, roleSide, mPictureUri);
 				
 			}
 			dismiss();

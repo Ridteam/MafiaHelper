@@ -14,8 +14,6 @@ import com.ridteam.mafiahelper.R;
 import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
 import com.ridteam.mafiahelper.adapters.IContextedAdapter.OnContextButtonClickListener;
 import com.ridteam.mafiahelper.adapters.RolesListAdapter;
-import com.ridteam.mafiahelper.controller.IRolesController;
-import com.ridteam.mafiahelper.controller.RolesController;
 import com.ridteam.mafiahelper.dialogs.AddPlayerDialogFragment;
 import com.ridteam.mafiahelper.dialogs.AddRoleDialogFragment;
 import com.ridteam.mafiahelper.dialogs.OkCancelDialogFragment;
@@ -23,13 +21,11 @@ import com.ridteam.mafiahelper.model.IBaseModel;
 
 public class RolesListFragment extends ListViewFragment implements OnContextButtonClickListener{
 	private IBaseModel mBaseModel;
-	private IRolesController mRolesController;
 	
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		mBaseModel = MafiaHelperApplication.getBaseModel(activity);
-		mRolesController = new RolesController(mBaseModel);
 
 		RolesListAdapter adapter = new RolesListAdapter(activity, null);
 		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getRolesLoader(), adapter);
@@ -81,14 +77,14 @@ public class RolesListFragment extends ListViewFragment implements OnContextButt
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if(which == DialogInterface.BUTTON_POSITIVE)
-							mRolesController.deleteRole(playerId);
+							mBaseModel.removeRole(playerId);
 					}
 				});
 		dialog.show(getFragmentManager(), OkCancelDialogFragment.TAG);
 	}
 	
 	private void showEditRoleDialog(long roleId) {
-		AddRoleDialogFragment dialog = AddRoleDialogFragment.create(mRolesController, roleId);
+		AddRoleDialogFragment dialog = AddRoleDialogFragment.create(roleId);
 		dialog.show(getFragmentManager(), AddPlayerDialogFragment.TAG);
 	}
 }

@@ -9,14 +9,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ridteam.mafiahelper.MafiaHelperApplication;
 import com.ridteam.mafiahelper.R;
-import com.ridteam.mafiahelper.controller.IPlayersController;
+import com.ridteam.mafiahelper.model.IBaseModel;
 
 public class AddPlayerDialogFragment extends DialogFragment implements OnClickListener{
 	public static final String TAG = "addPlayerDialogFragment";
 	
 	private TextView mName;
-	private IPlayersController mController;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,12 +38,10 @@ public class AddPlayerDialogFragment extends DialogFragment implements OnClickLi
 
 	@Override
 	public void onClick(View v) {
-		if(mController != null)
-			mController.addPlayer(mName.getText().toString());
+		IBaseModel baseModel = MafiaHelperApplication.getBaseModel(getActivity());
+		String name = mName.getText().toString();
+		if(baseModel != null && !"".equals(name))
+			baseModel.addPlayer(name);
 		dismiss();
-	}
-	
-	public void setController(IPlayersController controller) {
-		mController = controller;
 	}
 }

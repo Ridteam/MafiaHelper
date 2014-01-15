@@ -14,20 +14,16 @@ import com.ridteam.mafiahelper.R;
 import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
 import com.ridteam.mafiahelper.adapters.IContextedAdapter.OnContextButtonClickListener;
 import com.ridteam.mafiahelper.adapters.PlayersListAdapter;
-import com.ridteam.mafiahelper.controller.IPlayersController;
-import com.ridteam.mafiahelper.controller.PlayersController;
 import com.ridteam.mafiahelper.dialogs.OkCancelDialogFragment;
 import com.ridteam.mafiahelper.model.IBaseModel;
 
 public class PlayersListFragment extends ListViewFragment implements OnContextButtonClickListener {
 	private IBaseModel mBaseModel;
-	private IPlayersController mPlayersController;
 	
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		mBaseModel = MafiaHelperApplication.getBaseModel(activity);
-		mPlayersController = new PlayersController(mBaseModel);
 		
 		PlayersListAdapter adapter = new PlayersListAdapter(activity, null);
 		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getPlayersLoader(), adapter);
@@ -76,7 +72,7 @@ public class PlayersListFragment extends ListViewFragment implements OnContextBu
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if(which == DialogInterface.BUTTON_POSITIVE)
-							mPlayersController.deletePlayer(playerId);
+							mBaseModel.removePlayer(playerId);
 					}
 				});
 		dialog.show(getFragmentManager(), OkCancelDialogFragment.TAG);
