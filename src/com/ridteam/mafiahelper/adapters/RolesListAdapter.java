@@ -14,20 +14,24 @@ import com.ridteam.mafiahelper.utils.ImageUtils;
 public class RolesListAdapter extends ContextedCursorAdapter<RolesListAdapter.ViewHolder> {
 	private int mIdIndex;
 	private int mRoleNameIndex;
-	private int mRoleDescIndex;
+	private int mRoleSideIndex;
 	private int mRolePictureIndex;
+	
+	private String[] mSides;
 
 	public RolesListAdapter(Context context, Cursor cursor, int layout) {
 		super(context, cursor, layout, 0);
+		mSides = context.getResources().getStringArray(R.array.side);
 	}
 	
 	void bindHolder(ViewHolder holder, Context context, Cursor cursor) {
-		String roleName = cursor.getString(mRoleNameIndex);
-		String description = cursor.getString(mRoleDescIndex);
 		String rolePicture = cursor.getString(mRolePictureIndex);
+		String roleName = cursor.getString(mRoleNameIndex);
+		int sideId = cursor.getInt(mRoleSideIndex);
+		String side = mSides[sideId];
 
 		holder.roleName.setText(roleName);
-		holder.description.setText(description);
+		holder.side.setText(side);
 		ImageUtils.setImage(holder.rolePicture, ImageUtils.ROLES_FOLDER, rolePicture, context);
 		
 		@SuppressWarnings("unchecked")
@@ -49,7 +53,7 @@ public class RolesListAdapter extends ContextedCursorAdapter<RolesListAdapter.Vi
 		if(cursor != null) {
 			mIdIndex = cursor.getColumnIndex("_id");
 			mRoleNameIndex = cursor.getColumnIndex(MafiaHelperTables.RolesColumns.NAME);
-			mRoleDescIndex = cursor.getColumnIndex(MafiaHelperTables.RolesColumns.DESC);
+			mRoleSideIndex = cursor.getColumnIndex(MafiaHelperTables.RolesColumns.SIDE);
 			mRolePictureIndex = cursor.getColumnIndex(MafiaHelperTables.RolesColumns.PICTURE);
 		}
 	}
@@ -64,15 +68,15 @@ public class RolesListAdapter extends ContextedCursorAdapter<RolesListAdapter.Vi
 	};
 	
 	class ViewHolder {
-		public final TextView roleName;
 		public final ImageView rolePicture;
-		public final TextView description;
+		public final TextView roleName;
+		public final TextView side;
 		public final View menuButton;
 		
 		public ViewHolder(View view) {
-			roleName = (TextView) view.findViewById(R.id.txtRoleName);
 			rolePicture = (ImageView) view.findViewById(R.id.imgRolePicture);
-			description = (TextView) view.findViewById(R.id.txtDesc);
+			roleName = (TextView) view.findViewById(R.id.txtRoleName);
+			side = (TextView) view.findViewById(R.id.txtSide);
 			menuButton = (TextView) view.findViewById(R.id.btnMenu);
 			menuButton.setTag(new ContextHolder());
 			menuButton.setOnClickListener(mMenuClickListener);
