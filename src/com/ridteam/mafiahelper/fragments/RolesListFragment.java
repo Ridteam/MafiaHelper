@@ -29,7 +29,7 @@ public class RolesListFragment extends ListViewFragment implements OnContextButt
 		super.onAttach(activity);
 		mBaseModel = MafiaHelperApplication.getBaseModel(activity);
 
-		RolesListAdapter adapter = new RolesListAdapter(activity, null);
+		RolesListAdapter adapter = new RolesListAdapter(activity, null, R.layout.item_roles_list);
 		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getRolesLoader(), adapter);
 		getSupportLoaderManager().destroyLoader(0);
 		getSupportLoaderManager().initLoader(0, null, loaderCallback);

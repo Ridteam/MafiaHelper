@@ -1,0 +1,69 @@
+package com.ridteam.mafiahelper.dialogs;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.CursorAdapter;
+
+import com.ridteam.mafiahelper.MafiaHelperApplication;
+import com.ridteam.mafiahelper.R;
+import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
+import com.ridteam.mafiahelper.adapters.RolesListAdapter;
+import com.ridteam.mafiahelper.model.IBaseModel;
+
+public class SelectRoleDialogFragment extends DialogFragment implements OnClickListener {
+	public static final String TAG = "SelectRoleDialogFragment";
+	public static final String PLAYER_ID = "PlayerId";
+	
+	private IBaseModel mBaseModel;
+	private CursorAdapter mAdapter;
+	
+	private long mPlayerId;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null)
+			mPlayerId = savedInstanceState.getLong(PLAYER_ID);
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		mBaseModel = MafiaHelperApplication.getBaseModel(activity);
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putLong(PLAYER_ID, mPlayerId);
+	}
+	
+	@Override
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		mAdapter = new RolesListAdapter(getActivity(), null, R.layout.item_select_role);
+		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getRolesLoader(), mAdapter);
+		getLoaderManager().destroyLoader(0);
+		getLoaderManager().initLoader(0, null, loaderCallback);
+		
+		Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setAdapter(mAdapter, this);
+		builder.setTitle(R.string.dialog_select_role_title);
+		return builder.create();
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		long roleId = mAdapter.getItemId(which);
+		mBaseModel.setRole(mPlayerId, roleId);
+	}
+	
+	public void setPlayerId(long id) {
+		mPlayerId = id;
+	}
+}

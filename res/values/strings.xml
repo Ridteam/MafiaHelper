@@ -17,6 +17,7 @@
     <string name="dialog_add_role_desc">Description</string>
     <string name="dialog_delete_role_title">Delete Role</string>
     <string name="dialog_delete_role_message">Delete role from the list?</string>
+    <string name="dialog_select_role_title">Select role</string>
     
     <string name="action_roles">Roles</string>
     <string name="action_players">Players</string>

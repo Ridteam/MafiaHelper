@@ -17,8 +17,8 @@ public class RolesListAdapter extends ContextedCursorAdapter<RolesListAdapter.Vi
 	private int mRoleDescIndex;
 	private int mRolePictureIndex;
 
-	public RolesListAdapter(Context context, Cursor cursor) {
-		super(context, cursor, R.layout.item_roles_list, 0);
+	public RolesListAdapter(Context context, Cursor cursor, int layout) {
+		super(context, cursor, layout, 0);
 	}
 	
 	void bindHolder(ViewHolder holder, Context context, Cursor cursor) {

@@ -15,6 +15,7 @@ import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
 import com.ridteam.mafiahelper.adapters.IContextedAdapter.OnContextButtonClickListener;
 import com.ridteam.mafiahelper.adapters.PlayersListAdapter;
 import com.ridteam.mafiahelper.dialogs.OkCancelDialogFragment;
+import com.ridteam.mafiahelper.dialogs.SelectRoleDialogFragment;
 import com.ridteam.mafiahelper.model.IBaseModel;
 
 public class PlayersListFragment extends ListViewFragment implements OnContextButtonClickListener {
@@ -36,7 +37,9 @@ public class PlayersListFragment extends ListViewFragment implements OnContextBu
 	
 	@Override
 	public void onListItemClick(ListView list, View view, int position, long id) {
-		// TODO Show set role dialog
+		SelectRoleDialogFragment dialog = new SelectRoleDialogFragment();
+		dialog.setPlayerId(id);
+		dialog.show(getFragmentManager(), SelectRoleDialogFragment.TAG);
 	}
 
 	@Override
