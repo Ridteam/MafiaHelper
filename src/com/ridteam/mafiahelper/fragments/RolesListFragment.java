@@ -2,6 +2,7 @@ package com.ridteam.mafiahelper.fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 
 import com.ridteam.mafiahelper.MafiaHelperApplication;
 import com.ridteam.mafiahelper.R;
+import com.ridteam.mafiahelper.activitys.RoleDetailsActivity;
 import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
 import com.ridteam.mafiahelper.adapters.IContextedAdapter.OnContextButtonClickListener;
 import com.ridteam.mafiahelper.adapters.RolesListAdapter;
@@ -38,7 +40,10 @@ public class RolesListFragment extends ListViewFragment implements OnContextButt
 	
 	@Override
 	public void onListItemClick(ListView list, View view, int position, long id) {
-		// TODO Show role info
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), RoleDetailsActivity.class);
+		intent.putExtra(RoleDetailsFragment.ROLE_ID, id);
+		getActivity().startActivity(intent);
 	}
 
 	@Override

@@ -25,6 +25,7 @@
 			android:name = "com.ridteam.mafiahelper.database.MafiaHelperProvider"
 			android:authorities="com.ridteam.mafiahelper.contentprovider"
 			android:writePermission="com.ridteam.mafiahelper.contentprovider.permission.WRITE_DBLOCAL"/>
+        <activity android:name=".activitys.RoleDetailsActivity"></activity>
         
     </application>
 
