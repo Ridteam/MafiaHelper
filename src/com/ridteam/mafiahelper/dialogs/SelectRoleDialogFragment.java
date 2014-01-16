@@ -9,19 +9,22 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.CursorAdapter;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.ridteam.mafiahelper.MafiaHelperApplication;
 import com.ridteam.mafiahelper.R;
+import com.ridteam.mafiahelper.activitys.RoleDetailsActivity;
 import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
 import com.ridteam.mafiahelper.adapters.RolesListAdapter;
+import com.ridteam.mafiahelper.adapters.IContextedAdapter.OnContextButtonClickListener;
 import com.ridteam.mafiahelper.model.IBaseModel;
 
-public class SelectRoleDialogFragment extends DialogFragment implements OnClickListener {
+public class SelectRoleDialogFragment extends DialogFragment implements OnClickListener, OnContextButtonClickListener {
 	public static final String TAG = "SelectRoleDialogFragment";
 	public static final String PLAYER_ID = "PlayerId";
 	
 	private IBaseModel mBaseModel;
-	private CursorAdapter mAdapter;
+	private RolesListAdapter mAdapter;
 	
 	private long mPlayerId;
 	
@@ -47,6 +50,7 @@ public class SelectRoleDialogFragment extends DialogFragment implements OnClickL
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		mAdapter = new RolesListAdapter(getActivity(), null, R.layout.item_select_role);
+		mAdapter.setOnContextButtonClickListener(this);
 		CursorAdapterLoader loaderCallback = new CursorAdapterLoader(mBaseModel.getRolesLoader(), mAdapter);
 		getLoaderManager().destroyLoader(0);
 		getLoaderManager().initLoader(0, null, loaderCallback);
@@ -65,5 +69,10 @@ public class SelectRoleDialogFragment extends DialogFragment implements OnClickL
 	
 	public void setPlayerId(long id) {
 		mPlayerId = id;
+	}
+
+	@Override
+	public void onContextButtonClick(AdapterContextMenuInfo menuInfo) {
+		RoleDetailsActivity.show(getActivity(), menuInfo.id);
 	}
 }

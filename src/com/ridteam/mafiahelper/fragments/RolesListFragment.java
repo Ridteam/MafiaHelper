@@ -2,7 +2,6 @@ package com.ridteam.mafiahelper.fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,10 +39,7 @@ public class RolesListFragment extends ListViewFragment implements OnContextButt
 	
 	@Override
 	public void onListItemClick(ListView list, View view, int position, long id) {
-		Intent intent = new Intent();
-		intent.setClass(getActivity(), RoleDetailsActivity.class);
-		intent.putExtra(RoleDetailsFragment.ROLE_ID, id);
-		getActivity().startActivity(intent);
+		RoleDetailsActivity.show(getActivity(), id);
 	}
 
 	@Override
