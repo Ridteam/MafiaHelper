@@ -8,15 +8,14 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.widget.CursorAdapter;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.ridteam.mafiahelper.MafiaHelperApplication;
 import com.ridteam.mafiahelper.R;
 import com.ridteam.mafiahelper.activitys.RoleDetailsActivity;
 import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
-import com.ridteam.mafiahelper.adapters.RolesListAdapter;
 import com.ridteam.mafiahelper.adapters.IContextedAdapter.OnContextButtonClickListener;
+import com.ridteam.mafiahelper.adapters.RolesListAdapter;
 import com.ridteam.mafiahelper.model.IBaseModel;
 
 public class SelectRoleDialogFragment extends DialogFragment implements OnClickListener, OnContextButtonClickListener {
@@ -31,20 +30,13 @@ public class SelectRoleDialogFragment extends DialogFragment implements OnClickL
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(savedInstanceState != null)
-			mPlayerId = savedInstanceState.getLong(PLAYER_ID);
+		setRetainInstance(true);
 	}
 	
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		mBaseModel = MafiaHelperApplication.getBaseModel(activity);
-	}
-	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putLong(PLAYER_ID, mPlayerId);
 	}
 	
 	@Override

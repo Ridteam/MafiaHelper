@@ -28,6 +28,12 @@ public class OkCancelDialogFragment extends DialogFragment {
 		
 		return dialog;
 	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+	}
 
 	@Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

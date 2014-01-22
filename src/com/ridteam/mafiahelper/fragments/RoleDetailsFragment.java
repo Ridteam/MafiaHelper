@@ -30,15 +30,7 @@ public class RoleDetailsFragment extends Fragment implements LoaderCallbacks<Cur
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(savedInstanceState != null)
-			mRoleId = savedInstanceState.getLong(ROLE_ID, 0);
-		else mRoleId = 0;
-	}
-	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putLong(ROLE_ID, mRoleId);
+		setRetainInstance(true);
 	}
 
 	@Override
@@ -50,11 +42,9 @@ public class RoleDetailsFragment extends Fragment implements LoaderCallbacks<Cur
 		mName = (TextView) view.findViewById(R.id.txtRoleName);
 		mDescription = (TextView) view.findViewById(R.id.txtRoleDescription);
 		mSide = (TextView) view.findViewById(R.id.txtSide);
-
-		LoaderManager loaderManager = getLoaderManager();
-		loaderManager.destroyLoader(0);
-		loaderManager.initLoader(0, null, this);
-
+		
+		load();
+		
 		return view;
 	}
 
@@ -86,6 +76,17 @@ public class RoleDetailsFragment extends Fragment implements LoaderCallbacks<Cur
 	}
 	
 	public void setRoleId(long id) {
-		mRoleId = id;
+		if(mRoleId != id) {
+			mRoleId = id;
+			load();
+		}
+	}
+	
+	private void load() {
+		if(mRoleId != 0) {
+			LoaderManager loaderManager = getLoaderManager();
+			loaderManager.destroyLoader(0);
+			loaderManager.initLoader(0, null, this);
+		}
 	}
 }
