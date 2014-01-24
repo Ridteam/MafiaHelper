@@ -266,18 +266,27 @@ public class MafiaHelperProvider extends ContentProvider {
 	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 		SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 		int updateCount = 0;
-		String ssid;
+		String ssid,where;
 		switch (sUriMatcher.match(uri)) {
 		case PLAYERS:
 			updateCount = db.update(Tables.PLAYERS, values, selection, selectionArgs);
 			break;
 		case PLAYERS_ID:
 			ssid = uri.getPathSegments().get(Tables.SSID_PATH_POSITION);
-			String where = BaseColumns._ID + " = " + ssid;
+			where = BaseColumns._ID + " = " + ssid;
 			if (!TextUtils.isEmpty(selection)) {
 				where += " AND " + selection;
 			}
-			updateCount = db.update(Tables.PLAYERS, values, where, selectionArgs);
+		case ROLES:
+			updateCount = db.update(Tables.ROLES, values, selection, selectionArgs);
+			break;
+		case ROLES_ID:
+			ssid = uri.getPathSegments().get(Tables.SSID_PATH_POSITION);
+			where = BaseColumns._ID + " = " + ssid;
+			if (!TextUtils.isEmpty(selection)) {
+				where += " AND " + selection;
+			}
+			updateCount = db.update(Tables.ROLES, values, where, selectionArgs);
 			break;
 		default:
 			throw new IllegalArgumentException("Unsupported URI: " + uri);

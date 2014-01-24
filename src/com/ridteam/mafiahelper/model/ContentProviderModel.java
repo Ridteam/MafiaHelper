@@ -195,6 +195,7 @@ public class ContentProviderModel implements IBaseModel {
 
 	@Override
 	public CursorLoader getRoleLoader(long roleId) {
+		Log.d(TAG, RolesTable.CONTENT_URI.toString()+" id = "+roleId);
 		Log.d(TAG, RolesTable.CONTENT_URI.toString());
 		return new CursorLoader(mContext, RolesTable.CONTENT_URI, null, BaseColumns._ID + "=?",
 				new String[] { String.valueOf(roleId) }, null);
