@@ -2,6 +2,7 @@ package com.ridteam.mafiahelper.fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +25,13 @@ public class RolesListFragment extends ListViewFragment implements OnContextButt
 	private IBaseModel mBaseModel;
 	
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		setHasOptionsMenu(true);
+	}
+	
+	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		mBaseModel = MafiaHelperApplication.getBaseModel(activity);
@@ -35,6 +43,21 @@ public class RolesListFragment extends ListViewFragment implements OnContextButt
 		
 		setListAdapter(adapter);
 		adapter.setOnContextButtonClickListener(this);
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.menu_roles_list, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_add_role:
+			showAddRoleDialog();
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
@@ -86,6 +109,11 @@ public class RolesListFragment extends ListViewFragment implements OnContextButt
 	
 	private void showEditRoleDialog(long roleId) {
 		AddRoleDialogFragment dialog = AddRoleDialogFragment.create(roleId);
+		dialog.show(getFragmentManager(), AddPlayerDialogFragment.TAG);
+	}
+	
+	private void showAddRoleDialog() {
+		AddRoleDialogFragment dialog = AddRoleDialogFragment.create(0);
 		dialog.show(getFragmentManager(), AddPlayerDialogFragment.TAG);
 	}
 }

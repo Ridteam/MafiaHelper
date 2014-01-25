@@ -8,8 +8,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.ridteam.mafiahelper.dialogs.AddPlayerDialogFragment;
-import com.ridteam.mafiahelper.dialogs.AddRoleDialogFragment;
 import com.ridteam.mafiahelper.fragments.ListViewFragment;
 import com.ridteam.mafiahelper.fragments.PlayersListFragment;
 import com.ridteam.mafiahelper.fragments.RolesListFragment;
@@ -70,23 +68,14 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_add_player:
-			showAddPlayersDialog();
-			break;
-		case R.id.action_add_role:
-			showAddRoleDialog();
-			break;
 		case R.id.action_show_players:
 			setScene(SCENE_PLAYERS_LIST);
-			break;
+			return true;
 		case R.id.action_show_roles:
 			setScene(SCENE_ROLES_LIST);
-			break;
-
-		default:
-			break;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	@Override
@@ -125,24 +114,6 @@ public class MainActivity extends ActionBarActivity {
 			transaction.replace(R.id.fragment, fragment, fragment.getClass().getName());
 			transaction.commit();
 		}
-	}
-	
-	private void addSceneFragment(Fragment fragment) {
-		if(fragment != null) {
-			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-			transaction.add(R.id.fragment, fragment, fragment.getClass().getName());
-			transaction.commit();
-		}
-	}
-
-	private void showAddPlayersDialog() {
-		AddPlayerDialogFragment dialog = new AddPlayerDialogFragment();
-		dialog.show(getSupportFragmentManager(), AddPlayerDialogFragment.TAG);
-	}
-	
-	private void showAddRoleDialog() {
-		AddRoleDialogFragment dialog = AddRoleDialogFragment.create(0);
-		dialog.show(getSupportFragmentManager(), AddPlayerDialogFragment.TAG);
 	}
 
 }

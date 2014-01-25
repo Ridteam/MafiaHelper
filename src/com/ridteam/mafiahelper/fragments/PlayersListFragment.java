@@ -2,6 +2,7 @@ package com.ridteam.mafiahelper.fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,12 +15,20 @@ import com.ridteam.mafiahelper.R;
 import com.ridteam.mafiahelper.adapters.CursorAdapterLoader;
 import com.ridteam.mafiahelper.adapters.IContextedAdapter.OnContextButtonClickListener;
 import com.ridteam.mafiahelper.adapters.PlayersListAdapter;
+import com.ridteam.mafiahelper.dialogs.AddPlayerDialogFragment;
 import com.ridteam.mafiahelper.dialogs.OkCancelDialogFragment;
 import com.ridteam.mafiahelper.dialogs.SelectRoleDialogFragment;
 import com.ridteam.mafiahelper.model.IBaseModel;
 
 public class PlayersListFragment extends ListViewFragment implements OnContextButtonClickListener {
 	private IBaseModel mBaseModel;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		setHasOptionsMenu(true);
+	}
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -33,6 +42,21 @@ public class PlayersListFragment extends ListViewFragment implements OnContextBu
 		
 		setListAdapter(adapter);
 		adapter.setOnContextButtonClickListener(this);
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.menu_players_list, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_add_player:
+			showAddPlayersDialog();
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
@@ -79,6 +103,11 @@ public class PlayersListFragment extends ListViewFragment implements OnContextBu
 					}
 				});
 		dialog.show(getFragmentManager(), OkCancelDialogFragment.TAG);
+	}
+
+	private void showAddPlayersDialog() {
+		AddPlayerDialogFragment dialog = new AddPlayerDialogFragment();
+		dialog.show(getFragmentManager(), AddPlayerDialogFragment.TAG);
 	}
 
 }
