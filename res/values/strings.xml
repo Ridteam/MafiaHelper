@@ -14,6 +14,10 @@
     <string name="dialog_edit_role_title">Edit role</string>
     <string name="dialog_add_role_name">Role name</string>
     <string name="dialog_add_role_side">Side</string>
+    <string name="dialog_add_role_can_shoot">Can shoot</string>
+    <string name="dialog_add_role_can_heal">Can heal</string>
+    <string name="dialog_add_role_give_alibi">Give alibi</string>
+    <string name="dialog_add_role_can_mute">Can mute</string>
     <string name="dialog_add_role_desc">Description</string>
     <string name="dialog_delete_role_title">Delete Role</string>
     <string name="dialog_delete_role_message">Delete role from the list?</string>

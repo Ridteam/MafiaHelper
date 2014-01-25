@@ -51,7 +51,6 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		int groupId = 0;
-		
 		switch (mScene) {
 		case SCENE_PLAYERS_LIST:
 			groupId = R.id.action_group_players;
