@@ -34,10 +34,11 @@ public class ContentProviderModel implements IBaseModel {
 	}
 
 	@Override
-	public void addPlayer(String name) {
+	public long addPlayer(String name) {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(PlayersTable.NAME, name);
-		mContext.getContentResolver().insert(PlayersTable.CONTENT_URI, contentValues);
+		Uri uri = mContext.getContentResolver().insert(PlayersTable.CONTENT_URI, contentValues);
+		return Long.parseLong(uri.getLastPathSegment());
 	}
 
 	@Override
@@ -130,12 +131,13 @@ public class ContentProviderModel implements IBaseModel {
 	}
 
 	@Override
-	public void addPlayersEffects(long playerId, int type, int time) {
+	public long addPlayersEffects(long playerId, int type, int time) {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(PlayerEffectsTable.TYPE, type);
 		contentValues.put(PlayerEffectsTable.TIME, time);
 		contentValues.put(PlayerEffectsTable.PLAYER_ID, playerId);
-		mContext.getContentResolver().insert(PlayersTable.CONTENT_URI, contentValues);
+		Uri uri =mContext.getContentResolver().insert(PlayersTable.CONTENT_URI, contentValues);
+		return Long.parseLong(uri.getLastPathSegment());
 	}
 
 	@Override
@@ -172,12 +174,13 @@ public class ContentProviderModel implements IBaseModel {
 	}
 
 	@Override
-	public void addPlayerHistory(String name, String date, boolean isWin) {
+	public long addPlayerHistory(String name, String date, boolean isWin) {
 		// ContentValues contentValues = new ContentValues();
 		// contentValues.put(PlayerHistoryTable.LAST_GAME, date);
 		// contentValues.put(PlayerHistoryTable.WINS, date);
 		// mContext.getContentResolver().insert(PlayersTable.CONTENT_URI,
 		// contentValues);
+		return 0;
 	}
 
 	@Override
@@ -202,13 +205,14 @@ public class ContentProviderModel implements IBaseModel {
 	}
 
 	@Override
-	public void addRole(String name, String desc, int side, String picture) {
+	public long addRole(String name, String desc, int side, String picture) {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(RolesTable.NAME, name);
 		contentValues.put(RolesTable.DESC, desc);
 		contentValues.put(RolesTable.SIDE, side);
 		contentValues.put(RolesTable.PICTURE, picture);
-		mContext.getContentResolver().insert(RolesTable.CONTENT_URI, contentValues);
+		Uri uri = mContext.getContentResolver().insert(RolesTable.CONTENT_URI, contentValues);
+		return Long.parseLong(uri.getLastPathSegment());
 	}
 
 	@Override
@@ -219,7 +223,6 @@ public class ContentProviderModel implements IBaseModel {
 		contentValues.put(RolesTable.DESC, desc);
 		contentValues.put(RolesTable.SIDE, side);
 		contentValues.put(RolesTable.PICTURE, picture);
-		;
 		mContext.getContentResolver().update(uri, contentValues, BaseColumns._ID + "=?",
 				new String[] { String.valueOf(roleId) });
 	}
@@ -238,16 +241,18 @@ public class ContentProviderModel implements IBaseModel {
 	}
 
 	@Override
-	public void addRoleProperty(long roleId, int type, int value) {
+	public long addRoleProperty(long roleId, int type, int value) {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(RolePropertiesTable.ROLE_ID, roleId);
 		contentValues.put(RolePropertiesTable.TYPE, type);
 		contentValues.put(RolePropertiesTable.VALUE, value);
-		mContext.getContentResolver().insert(RolesTable.CONTENT_URI, contentValues);
+		Uri uri = mContext.getContentResolver().insert(RolePropertiesTable.CONTENT_URI, contentValues);
+		return Long.parseLong(uri.getLastPathSegment());
 	}
 
 	@Override
 	public void removeRolePropertysByRole(long roleId) {
+		Log.d(TAG, "roleId = "+roleId);
 		mContext.getContentResolver().delete(RolePropertiesTable.CONTENT_URI, RolePropertiesTable.ROLE_ID + "=?",
 				new String[] { String.valueOf(roleId) });
 	}

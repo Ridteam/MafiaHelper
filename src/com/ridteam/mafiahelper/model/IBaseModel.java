@@ -21,7 +21,7 @@ public interface IBaseModel {
 	 * 
 	 * @param name Name of added player.
 	 */
-	public void addPlayer(String name);
+	public long addPlayer(String name);
 	
 	/**
 	 * Remove player from database.
@@ -64,23 +64,23 @@ public interface IBaseModel {
 	public void increaseRebuke(long playerId, int value);
 
 	public CursorLoader getPlayersEffectsLoader(long playerId);
-	public void addPlayersEffects(long playerId, int type, int time);
+	public long addPlayersEffects(long playerId, int type, int time);
 	public void removePlayersEffects(long playerId, int type);
 	public void removePlayersEffects(long playerId);
 	public void decreasePlayersEffectsTime(int value);
 
 	public CursorLoader getPlayerHistoryLoader();
 	public CursorLoader getPlayerHistoryLoader(int limit);
-	public void addPlayerHistory(String name, String date, boolean isWin);
+	public long addPlayerHistory(String name, String date, boolean isWin);
 	public void removePlayersHistory(long playerId);
 
 	public CursorLoader getRolesLoader();
 	public CursorLoader getRoleLoader(long roleId);
-	public void addRole(String name, String desc, int side, String picture);
+	public long addRole(String name, String desc, int side, String picture);
 	public void editRole(long roleId, String name, String desc, int side, String picture);
 	public void removeRole(long roleId);
 	
 	public CursorLoader getRolePropertiesLoader(long roleId);
-	public void addRoleProperty(long roleId, int type, int value);
+	public long addRoleProperty(long roleId, int type, int value);
 	public void removeRolePropertysByRole(long roleId);
 }

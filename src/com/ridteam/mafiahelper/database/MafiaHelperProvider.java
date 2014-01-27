@@ -107,6 +107,7 @@ public class MafiaHelperProvider extends ContentProvider {
 			break;
 		case ROLE_PROPERTIES:
 			rowsAffected = db.delete(Tables.ROLE_PROPERTIES, selection, selectionArgs);
+			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
