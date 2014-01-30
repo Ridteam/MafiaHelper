@@ -31,6 +31,9 @@
     <string name="action_delete_role">Delete</string>
     <string name="action_edit_role">Edit</string>
     
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    
     <string-array name="side">
         <item >Man for himself</item>
         <item >Peace</item>
