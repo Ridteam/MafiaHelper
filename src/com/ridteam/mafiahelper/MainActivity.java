@@ -12,17 +12,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.MenuItem;
 
+import com.ridteam.mafiahelper.fragments.AboutFragment;
 import com.ridteam.mafiahelper.fragments.ListViewFragment;
 import com.ridteam.mafiahelper.fragments.PlayersListFragment;
 import com.ridteam.mafiahelper.fragments.RolesListFragment;
+import com.ridteam.mafiahelper.fragments.RulesListFragment;
 import com.ridteam.mafiahelper.fragments.SlidingMenuFragment;
 import com.ridteam.mafiahelper.fragments.SlidingMenuFragment.ISlidingMenuCallback;
 
 public class MainActivity extends ActionBarActivity implements ISlidingMenuCallback {
-	public static final int SCENE_PLAYERS_LIST	= 1;
-	public static final int SCENE_GAME			= 2;
-	public static final int SCENE_ROLES_LIST	= 3;
-
 	private static final String EXTRA_CONTENT_FRAGMENT = "ContentFragment";
 	private static final String EXTRA_TITLE = "Title";
 	
@@ -109,6 +107,12 @@ public class MainActivity extends ActionBarActivity implements ISlidingMenuCallb
 		case SlidingMenuFragment.OPTION_ROLES:
 			showRolesList();
 			break;
+		case SlidingMenuFragment.OPTION_RULES:
+			showRulesList();
+			break;
+		case SlidingMenuFragment.OPTION_ABOUT:
+			showAbout();
+			break;
 		}
 		mDrawerLayout.closeDrawer(Gravity.LEFT);
 	}
@@ -129,6 +133,16 @@ public class MainActivity extends ActionBarActivity implements ISlidingMenuCallb
 			mRolesListFragment = new RolesListFragment();
 		replaceContentFragment(mRolesListFragment);
 		setTitle(R.string.action_roles);
+	}
+	
+	private void showRulesList() {
+		replaceContentFragment(new RulesListFragment());
+		setTitle(R.string.action_rules);
+	}
+	
+	private void showAbout() {
+		replaceContentFragment(new AboutFragment());
+		setTitle(R.string.action_about);
 	}
 	
 	private void replaceContentFragment(Fragment fragment) {

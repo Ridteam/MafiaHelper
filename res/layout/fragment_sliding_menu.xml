@@ -17,4 +17,16 @@
         android:layout_height="wrap_content"
         android:text="@string/action_roles" />
 
+    <Button
+        android:id="@+id/btnRules"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/action_rules" />
+
+    <Button
+        android:id="@+id/btnAbout"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/action_about" />
+
 </LinearLayout>

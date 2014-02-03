@@ -25,6 +25,8 @@
     
     <string name="action_roles">Roles</string>
     <string name="action_players">Players</string>
+    <string name="action_rules">Rules</string>
+    <string name="action_about">About App</string>
     <string name="action_add_player">Add</string>
     <string name="action_delete_player">Delete</string>
     <string name="action_add_role">Add</string>
